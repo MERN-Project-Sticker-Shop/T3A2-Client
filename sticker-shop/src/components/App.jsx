@@ -14,7 +14,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />}/>
-        <Route path='/product-detail' element={<Product />}/>
+        <Route path='/product-detail/' element={<Product />}/>
         <Route path='/order-history' element={<OrderHistory/>} />
         <Route path='/cart' element={<Cart/>} />
         <Route path='*' element={<h3>Page Not Found!</h3>} />
