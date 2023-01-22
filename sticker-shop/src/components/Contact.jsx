@@ -5,8 +5,8 @@ const Contact = () => {
 <>
 <div className="container">
   <footer className="py-3 my-4">
-    <h4 className="text-center text-muted">Contact Us</h4>
-    <ul className="nav justify-content-center border-bottom pb-3 mb-3">
+    <h3 className="text-center text-muted mb-4">Contact Us</h3>
+    <ul className="nav justify-content-center pb-3 mb-2">
       <li className="ms-3"><span className="text-center text-muted">Phone: 0123456789</span></li>
       <li className="ms-3"><span className="text-center text-muted">Email: sticker_shop@gmail.com</span></li>
     </ul>
