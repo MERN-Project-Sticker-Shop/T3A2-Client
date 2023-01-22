@@ -1,5 +1,6 @@
 import React from 'react'
 import Album from './Album'
+import { useEffect } from 'react'
 
 const Home = ({imageLink, name, price, id}) => {
   return (

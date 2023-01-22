@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom'
 
 const Album = ({imageLink, name, price, id}) => {
 
-  function ShowDetail() {
+  const nav = useNavigate()
+
+  function showDetail() {
 
   }
 
@@ -17,7 +19,7 @@ const Album = ({imageLink, name, price, id}) => {
                   <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" onclick={ShowDetail}>View Details</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary" onclick={showDetail}>View Details</button>
                     </div>
                     <small class="text-muted">product ID: xxxxxxx{id}</small>
                   </div>
