@@ -1,8 +1,13 @@
 import React from 'react'
 import Album from './Album'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
-const Home = ({imageLink, name, price, id}) => {
+const Home = ({products}) => {
+
+  const [search, setSearch] = useState("")
+
+  const filteredProducts = products.filter(product => product.name.toLowerCase().includes(search))
+
   return (
     <>
         <div>
@@ -13,17 +18,13 @@ const Home = ({imageLink, name, price, id}) => {
         </div>
         <div>
             <h2>Products</h2>
-            <form role="search" style={{padding: "2rem"}}>
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search"/>
+            <form role="search" style={{padding: "2rem"}} onSubmit={event => event.preventDefault()}>
+                <input type="search" className="form-control" placeholder="Search..." value={search} onChange={(event) => setSearch(event.target.value.toLowerCase())} />
             </form>
-            <div class="album py-5 bg-light">
-                <div class="container">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <Album />
-                        <Album />
-                        <Album />
-                        <Album />
-                        <Album />
+            <div className="album py-5 bg-light">
+                <div className="container">
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        {filteredProducts.map(product => <div className="col-md-4" key={product.id}><Album id={product.id} name={product.name} price={product.price} imageLink={product.imageLink[0]}/></div>)}
                     </div>
                 </div>
             </div>
