@@ -9,7 +9,7 @@ const Product = ({product}) => {
   
   return (
     <>
-        <div style={{width: "75vw"}} class="container">
+        <div style={{width: "75vw"}} className="container">
             <Carousel imageLink={product.imageLink}/>
         </div>
         <h2>{product.name}</h2>
@@ -21,7 +21,7 @@ const Product = ({product}) => {
             <li>qwerfdgwrwter</li>
             <li>asdfaw4erqwer</li>
         </ul>
-        <button onClick={addProduct} type="button" class="btn btn-primary">Add to Cart</button>
+        <button onClick={addProduct} type="button" className="btn btn-primary">Add to Cart</button>
     </>
   )
 }

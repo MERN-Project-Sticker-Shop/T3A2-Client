@@ -1,8 +1,15 @@
 import React from 'react'
 import Album from './Album'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 const Home = ({products}) => {
+
+  const [search, setSearch] = useState()
+
+  function filterSong(event) {
+    event.preventDefault()
+    
+  }
   return (
     <>
         <div>
@@ -13,13 +20,13 @@ const Home = ({products}) => {
         </div>
         <div>
             <h2>Products</h2>
-            <form role="search" style={{padding: "2rem"}}>
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search"/>
+            <form role="search" style={{padding: "2rem"}} onSubmit={filterSong}>
+                <input type="search" className="form-control" placeholder="Search..." value={search} onChange={(event) => setSearch(event.target.value)} />
             </form>
-            <div class="album py-5 bg-light">
-                <div class="container">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        {products.map(product => <Album id={product.id} name={product.name} price={product.price} imageLink={product.imageLink[0]}/>)}
+            <div className="album py-5 bg-light">
+                <div className="container">
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        {products.map(product => <div key={product.id}><Album id={product.id} name={product.name} price={product.price} imageLink={product.imageLink[0]}/></div>)}
                     </div>
                 </div>
             </div>
