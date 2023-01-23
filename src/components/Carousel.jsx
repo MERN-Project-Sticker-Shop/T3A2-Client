@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Carousel = () => {
+const Carousel = ({ imageLink }) => {
   return (
     <div id="carouselExampleIndicators" class="carousel slide">
   <div class="carousel-indicators">
@@ -10,13 +10,13 @@ const Carousel = () => {
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://images.unsplash.com/photo-1627483262769-04d0a1401487?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxzZWFyY2h8MXx8YmFja2dyb3VuZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" class="d-block w-100" alt="..."/>
+      <img src={imageLink[0]} class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="https://images.unsplash.com/32/Mc8kW4x9Q3aRR3RkP5Im_IMG_4417.jpg?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmFja2dyb3VuZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" class="d-block w-100" alt="..."/>
+      <img src={imageLink[1]} class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGJhY2tncm91bmR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" class="d-block w-100" alt="..."/>
+      <img src={imageLink[2]} class="d-block w-100" alt="..."/>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

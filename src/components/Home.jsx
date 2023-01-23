@@ -2,7 +2,7 @@ import React from 'react'
 import Album from './Album'
 import { useEffect } from 'react'
 
-const Home = ({imageLink, name, price, id}) => {
+const Home = ({products}) => {
   return (
     <>
         <div>
@@ -19,11 +19,7 @@ const Home = ({imageLink, name, price, id}) => {
             <div class="album py-5 bg-light">
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <Album />
-                        <Album />
-                        <Album />
-                        <Album />
-                        <Album />
+                        {products.map(product => <Album id={product.id} name={product.name} price={product.price} imageLink={product.imageLink[0]}/>)}
                     </div>
                 </div>
             </div>
