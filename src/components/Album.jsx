@@ -12,7 +12,6 @@ const Album = ({imageLink, name, price, id }) => {
   }
 
   return (
-    <div className="col-md-4">
               <div className="card mb-4 box-shadow">
                 <img className="card-img-top" src={imageLink} alt="Product Image"/>
                 <div className="card-body">
@@ -27,7 +26,6 @@ const Album = ({imageLink, name, price, id }) => {
                   </div>
                 </div>
               </div>
-            </div>
   )
 }
 

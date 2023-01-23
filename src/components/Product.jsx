@@ -14,7 +14,7 @@ const Product = ({product}) => {
         </div>
         <h2>{product.name}</h2>
         <h3>Price: $ {product.price}</h3>
-        <small>Product ID: xxxxxx{product.id}</small>
+        <small>Product ID:{product.id}</small>
         <p>{product.description}</p>
         <ul>
             <li>asdfa</li>
