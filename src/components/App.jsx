@@ -49,6 +49,8 @@ const products = [
             "https://plus.unsplash.com/premium_photo-1661591302882-4fe3ee5c81da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzF8fHJpYmJvbnMlMjBhbmQlMjBoZWFydHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"]}
 ]
 
+const cart_num = 1
+
 const App = () => {
 
   const ProductWrapper = () => {
@@ -60,7 +62,7 @@ const App = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar cart_num={cart_num}/>
       <Routes>
         <Route path='/' element={<Home products={products}/>}/>
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
