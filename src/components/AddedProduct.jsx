@@ -29,19 +29,8 @@ const AddedProduct = ({item, setCart, cart}) => {
   function deleteProduct() {
     const toRemove = cart.filter(product => product.id == item.id)
     const difference = cart.filter(product => !toRemove.includes(product))
-    setCart([difference])
+    setCart(difference)
   }
-
-//   function deleteProduct() {
-//     const removeList = cart.filter(product => product.id == item.id)
-//     console.log(removeList)
-//     // let res = [...cart]
-//     removeList.forEach(listItem => {
-//         minusOne(cart, listItem)
-//     })
-//     // return res
-//   }
-// console.log(cart)
 
   return (
           <div className="card-body p-4">

@@ -2,7 +2,8 @@ import React from 'react'
 import AddedProduct from './AddedProduct'
 
 const Cart = ({cart, setCart}) => {
-// sort the cart for duplicated products using a new set cart
+
+    // sort the cart for duplicated products using a new set cart
   const sortedCart = new Set()
 
   // count the number of each product added to the original cart
@@ -27,6 +28,7 @@ const Cart = ({cart, setCart}) => {
       <h2>Cart</h2>
       <div className="container py-5 bg-light">
         {readyCart.map(item => <div className="card rounded-3 mb-4" key={item.id}><AddedProduct item={item} setCart={setCart} cart={cart}/></div>)}
+        {readyCart.length > 0 ? "Total Payable:" : "Your cart is currently empty."}
       </div>
     </>
   )
