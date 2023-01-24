@@ -3,10 +3,11 @@ import Trash from '../assets/trash3.svg'
 import Plus from '../assets/plus-square.svg'
 import Minus from '../assets/dash-square.svg'
 
-const AddedProduct = ({item, setCart, cart}) => {
+const AddedProduct = ({item, setCart, cart, getSubtotals}) => {
 
   const [quantity, setQuantity] = useState(item.counts)
 
+// **** Bug to be fixed: when the quantities are being modified, products in cart swap places when they reach the same quantity
   function increaseQuantity () {
     setQuantity(quantity+1)
     setCart([...cart,item])
@@ -31,6 +32,8 @@ const AddedProduct = ({item, setCart, cart}) => {
     const difference = cart.filter(product => !toRemove.includes(product))
     setCart(difference)
   }
+
+//   getSubtotals(quantity, item.price)
 
   return (
           <div className="card-body p-4">
