@@ -71,7 +71,7 @@ const App = () => {
         <Route path='/' element={<Home products={products}/>}/>
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
         <Route path='/order-history' element={<OrderHistory/>} />
-        <Route path='/cart' element={<Cart cart={cart}/>} />
+        <Route path='/cart' element={<Cart cart={cart} setCart={setCart}/>} />
         <Route path='*' element={<h3>Page Not Found!</h3>} />
       </Routes>
       <Contact />

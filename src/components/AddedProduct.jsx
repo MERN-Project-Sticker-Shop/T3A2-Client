@@ -3,18 +3,27 @@ import Trash from '../assets/trash3.svg'
 import Plus from '../assets/plus-square.svg'
 import Minus from '../assets/dash-square.svg'
 
-const AddedProduct = ({item}) => {
+const AddedProduct = ({item, setCart, cart}) => {
 
   const [quantity, setQuantity] = useState(item.counts)
 
   function increaseQuantity () {
     setQuantity(quantity+1)
+    setCart([...cart,item])
   }
   function decreaseQuantity () {
     if (quantity > 1) {
         setQuantity(quantity-1)
-    }  
-}
+        minusOne(cart, item)
+    }   
+  }
+
+  function minusOne(cart, item) {
+    const index = cart.indexOf(item)
+    if (index >=0 && index < cart.length) {
+        setCart([...cart.slice(0, index),...cart.slice(index+1)])
+    }
+  }
 
   return (
           <div className="card-body p-4">
