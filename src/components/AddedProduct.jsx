@@ -1,11 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Trash from '../assets/trash3.svg'
 import Plus from '../assets/plus-square.svg'
 import Minus from '../assets/dash-square.svg'
 
-const AddedProduct = ({item}) => {
+const AddedProduct = ({item, setCart, cart}) => {
+
+  const [quantity, setQuantity] = useState(item.counts)
+
+  function increaseQuantity () {
+    setQuantity(quantity+1)
+    setCart([...cart,item])
+  }
+  function decreaseQuantity () {
+    if (quantity > 1) {
+        setQuantity(quantity-1)
+        minusOne(cart, item)
+    }   
+  }
+
+  function minusOne(cart, item) {
+    const index = cart.indexOf(item)
+    if (index >=0 && index < cart.length) {
+        setCart([...cart.slice(0, index),...cart.slice(index+1)])
+    }
+  }
+
   return (
-      <div className="card rounded-3 mb-4">
           <div className="card-body p-4">
             <div className="row d-flex justify-content-between align-items-center">
               <div className="col-md-2 col-lg-2 col-xl-2">
@@ -18,26 +38,24 @@ const AddedProduct = ({item}) => {
                 <p><span className="text-muted">Price: </span>$ {item.price} </p>
               </div>
               <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button className="btn btn-link px-2">
-                  <img width="35vh" src={Minus} alt="minus one"/>
+                <button onClick={decreaseQuantity} className="btn btn-link px-2">
+                  <img width="30vh" src={Minus} alt="minus one"/>
                 </button>
 
-                <input min="1"  value={item.counts} type="number"
-                  className="form-control" />
+                <input min="1"  value={quantity} className="form-control" />
 
-                <button className="btn btn-link px-2">
-                  <img width="35vh" src={Plus} alt="add one"/>
+                <button onClick={increaseQuantity} className="btn btn-link px-2">
+                  <img width="30vh" src={Plus} alt="add one"/>
                 </button>
               </div>
               <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 className="mt-3">Subtotal: ${item.price * item.counts}</h5>
+                <h5 className="mt-3">Subtotal: ${item.price * quantity}</h5>
               </div>
               <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                 <button className="btn btn-link px-2"><img src={Trash} width="30vh" alt="trash-icon"/></button>
               </div>
             </div>
           </div>
-        </div>
   )
 }
 
