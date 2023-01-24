@@ -1,6 +1,6 @@
 import React from 'react'
 import Album from './Album'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const Home = ({products}) => {
 

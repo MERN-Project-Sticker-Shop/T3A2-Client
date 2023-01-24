@@ -49,8 +49,6 @@ const products = [
             "https://plus.unsplash.com/premium_photo-1661591302882-4fe3ee5c81da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzF8fHJpYmJvbnMlMjBhbmQlMjBoZWFydHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"]}
 ]
 
-
-
 const App = () => {
 
   const [cart, setCart] = useState([])
@@ -66,7 +64,6 @@ const App = () => {
     return product ? <Product product={product} addToCart={addToCart}/> : <h3>Product Not Found!</h3>
   }
 
-  
   return (
     <>
       <Navbar cart_num={cart_num}/>

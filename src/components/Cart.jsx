@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import AddedProduct from './AddedProduct'
 
 const Cart = ({cart}) => {
@@ -26,9 +26,8 @@ const Cart = ({cart}) => {
     <>
       <h2>Cart</h2>
       <div className="container py-5 bg-light">
-        {readyCart.map(item => <div key={item.id}><AddedProduct item={item}/></div>)}
+        {readyCart.map(item => <div className="card rounded-3 mb-4" key={item.id}><AddedProduct item={item}/></div>)}
       </div>
-
     </>
   )
 }
