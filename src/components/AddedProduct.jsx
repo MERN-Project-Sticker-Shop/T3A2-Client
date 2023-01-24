@@ -33,8 +33,7 @@ const AddedProduct = ({item}) => {
                   <img width="30vh" src={Minus} alt="minus one"/>
                 </button>
 
-                <input min="1"  value={quantity}
-                  className="form-control" />
+                <input min="1"  value={quantity} className="form-control" />
 
                 <button onClick={increaseQuantity} className="btn btn-link px-2">
                   <img width="30vh" src={Plus} alt="add one"/>

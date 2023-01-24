@@ -17,7 +17,7 @@ const Home = ({products}) => {
             <p>Introduction: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ante diam, sodales at quam id, tincidunt porttitor mi. Nunc lacinia sit amet nulla a pellentesque. Quisque molestie enim augue, ut iaculis tellus commodo ut. Aliquam condimentum, lacus ac elementum ullamcorper, augue mi ullamcorper risus, sed faucibus justo arcu nec felis. Curabitur hendrerit leo vehicula orci pharetra ornare. Aliquam sed pellentesque ipsum, vel facilisis neque. Nam sit amet purus posuere libero scelerisque eleifend eget sed metus. Suspendisse potenti. Aliquam erat volutpat. Nam a nulla ut tortor mattis feugiat pretium sit amet ex. Mauris ac ex in lectus interdum sollicitudin sed eu tortor.</p>
         </div>
         <div>
-            <h2>Products</h2>
+            <h2 id="product-start">Products</h2>
             <form role="search" style={{padding: "2rem"}} onSubmit={event => event.preventDefault()}>
                 <input type="search" className="form-control" placeholder="Search..." value={search} onChange={(event) => setSearch(event.target.value.toLowerCase())} />
             </form>
