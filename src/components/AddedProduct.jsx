@@ -11,6 +11,7 @@ const AddedProduct = ({item, setCart, cart}) => {
     setQuantity(quantity+1)
     setCart([...cart,item])
   }
+
   function decreaseQuantity () {
     if (quantity > 1) {
         setQuantity(quantity-1)
@@ -24,6 +25,23 @@ const AddedProduct = ({item, setCart, cart}) => {
         setCart([...cart.slice(0, index),...cart.slice(index+1)])
     }
   }
+
+  function deleteProduct() {
+    const toRemove = cart.filter(product => product.id == item.id)
+    const difference = cart.filter(product => !toRemove.includes(product))
+    setCart([difference])
+  }
+
+//   function deleteProduct() {
+//     const removeList = cart.filter(product => product.id == item.id)
+//     console.log(removeList)
+//     // let res = [...cart]
+//     removeList.forEach(listItem => {
+//         minusOne(cart, listItem)
+//     })
+//     // return res
+//   }
+// console.log(cart)
 
   return (
           <div className="card-body p-4">
@@ -52,7 +70,7 @@ const AddedProduct = ({item, setCart, cart}) => {
                 <h5 className="mt-3">Subtotal: ${item.price * quantity}</h5>
               </div>
               <div className="col-md-1 col-lg-1 col-xl-1 text-end">
-                <button className="btn btn-link px-2"><img src={Trash} width="30vh" alt="trash-icon"/></button>
+                <button onClick={deleteProduct} className="btn btn-link px-2"><img src={Trash} width="30vh" alt="trash-icon"/></button>
               </div>
             </div>
           </div>
