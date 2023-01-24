@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Routes, Route, useParams } from 'react-router-dom'
 import Navbar from './Navbar'
 import Contact from './Contact'
@@ -11,7 +11,7 @@ const products = [
   {id: 1001, 
     name: "Flower Stickers", 
     price: 5.5, 
-    quantity: 10,
+    // quantity: 10,
     description: "Colourful spring flowers in 3 different sizes", 
     imageLink: [
       "https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGZsb3dlcnN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
@@ -21,7 +21,7 @@ const products = [
     {id: 1002, 
       name: "Safari Animals", 
       price: 6.5,
-      quantity: 15, 
+      // quantity: 15, 
       description: "Animal Characters from the Movie Madagascar", 
       imageLink: [
         "https://images.unsplash.com/photo-1604602236223-156a7f332bc4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHNhZmFyaSUyMGFuaW1hbHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
@@ -31,7 +31,7 @@ const products = [
       {id: 1003, 
         name: "Super Heros", 
         price: 4.25,
-        quantity: 10, 
+        // quantity: 10, 
         description: "Spiderman, Ironman, Hulk, and Wonder Woman", 
         imageLink: [
           "https://images.unsplash.com/photo-1568833450751-fba3c6b2d129?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c3VwZXJoZXJvc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
@@ -41,7 +41,7 @@ const products = [
         {id: 1004, 
           name: "Sparkling Decorations", 
           price: 5.5,
-          quantity: 12, 
+          // quantity: 12, 
           description: "Ribbons, bows, stars, and lovehearts", 
           imageLink: [
             "https://images.unsplash.com/photo-1581022294699-89ec4e5338c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHJpYmJvbnMlMjBhbmQlMjBoZWFydHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
@@ -49,17 +49,24 @@ const products = [
             "https://plus.unsplash.com/premium_photo-1661591302882-4fe3ee5c81da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzF8fHJpYmJvbnMlMjBhbmQlMjBoZWFydHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"]}
 ]
 
-const cart_num = 1
+
 
 const App = () => {
+
+  const [cart, setCart] = useState([])
+  const cart_num = cart.length
+
+  function addToCart(product) {
+      setCart([...cart, product])
+  }
 
   const ProductWrapper = () => {
     const { id } = useParams()
     const product = products.find(product => product.id == id)
-    return product ? <Product product={product} /> : <h3>Product Not Found!</h3>
+    return product ? <Product product={product} addToCart={addToCart}/> : <h3>Product Not Found!</h3>
   }
-  
 
+  
   return (
     <>
       <Navbar cart_num={cart_num}/>
@@ -67,7 +74,7 @@ const App = () => {
         <Route path='/' element={<Home products={products}/>}/>
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
         <Route path='/order-history' element={<OrderHistory/>} />
-        <Route path='/cart' element={<Cart/>} />
+        <Route path='/cart' element={<Cart cart={cart}/>} />
         <Route path='*' element={<h3>Page Not Found!</h3>} />
       </Routes>
       <Contact />

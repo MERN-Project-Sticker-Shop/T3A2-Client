@@ -1,10 +1,11 @@
 import React from 'react'
 import Carousel from './Carousel'
 
-const Product = ({product}) => {
+const Product = ({product, addToCart}) => {
 
-  function addProduct() {
-
+  function addProduct(event) {
+    event.preventDefault()
+    addToCart(product)
   }
   
   return (
