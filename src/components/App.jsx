@@ -6,6 +6,7 @@ import Home from './Home'
 import Product from './Product'
 import OrderHistory from './OrderHistory'
 import Cart from './Cart'
+import Checkout from './Checkout'
 
 const products = [
   {id: 1001, 
@@ -72,6 +73,7 @@ const App = () => {
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
         <Route path='/order-history' element={<OrderHistory/>} />
         <Route path='/cart' element={<Cart cart={cart} setCart={setCart}/>} />
+        <Route path='/checkout' element={<Checkout/>}/>
         <Route path='*' element={<h3>Page Not Found!</h3>} />
       </Routes>
       <Contact />
