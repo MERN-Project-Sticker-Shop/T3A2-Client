@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Checkout = ({address, setAddress, addAddressToOrder, order, addOrderToOrders}) => {
+const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTotalToOrder, addOrderToOrders}) => {
 
   // **** To-Do: Validate input data
 
-  useEffect(() => addAddressToOrder(address), [address])
+  useEffect(() => {
+    addAddressToOrder(address)
+    addTotalToOrder(total)
+     }, [address, total])
 
   const nav = useNavigate()
   const [email, setEmail] = useState("")
@@ -116,7 +119,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, addOrderToOrde
             </div>
           </div>
           <hr className="my-4"/>
-          <h4 className="mb-3">Total Payable: $</h4>
+          <h4 className="mb-3">Total Payable: ${total}</h4>
 
           <button className="w-100 btn btn-warning btn-lg" type="submit">Place Order</button>
         </form>

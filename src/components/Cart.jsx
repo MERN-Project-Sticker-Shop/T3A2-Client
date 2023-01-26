@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AddedProduct from './AddedProduct'
 
-const Cart = ({cart, setCart, addCartToOrder}) => {
+const Cart = ({cart, setCart, addCartToOrder, setTotal}) => {
 
   const nav = useNavigate()
 
@@ -35,6 +35,8 @@ const Cart = ({cart, setCart, addCartToOrder}) => {
 
   // sum all the subtotals for the total payable
   const payable = subtotals.reduce((partialSum, additional) => partialSum + additional, 0)
+
+  useEffect(() => setTotal(payable), [cart])
 
   function toCheckout() {
     addCartToOrder(readyCart)
