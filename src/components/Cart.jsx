@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AddedProduct from './AddedProduct'
 
-const Cart = ({cart, setCart}) => {
+const Cart = ({cart, setCart, order, setOrder}) => {
 
   const [subtotal, setSubtotal] = useState(0)
   const nav = useNavigate()
@@ -39,6 +39,7 @@ const Cart = ({cart, setCart}) => {
   // readyCart.forEach(item => console.log(subtotal))
 
   function toCheckout() {
+    setOrder({...order, products: readyCart})
     nav('/checkout')
   }
 
