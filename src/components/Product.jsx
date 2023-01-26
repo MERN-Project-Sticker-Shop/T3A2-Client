@@ -1,7 +1,7 @@
 import React from 'react'
 import Carousel from './Carousel'
 
-const Product = ({product, addToCart}) => {
+const Product = ({product, addProductToCart}) => {
 
   function addProduct(event) {
     event.preventDefault()
@@ -10,7 +10,7 @@ const Product = ({product, addToCart}) => {
       price: product.price,
       imageLink: product.imageLinks[0]
     }
-    addToCart(cartItem)
+    addProductToCart(cartItem)
   }
   
   return (

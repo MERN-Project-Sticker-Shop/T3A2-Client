@@ -1,17 +1,26 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Checkout = ({address, setAddress, order, setOrder, orders, setOrders}) => {
+const Checkout = ({address, setAddress, addAddressToOrder, order, addOrderToOrders}) => {
 
-  useEffect(() => setOrder({...order, address: address}), [address])
+  // **** To-Do: Validate input data
+
+  useEffect(() => addAddressToOrder(address), [address])
 
   const nav = useNavigate()
+  const [email, setEmail] = useState("")
 
   function toConfirmation() {
-    setOrders([...orders, order])
+    addOrderToOrders(order)
     nav('/confirmation')
-   
   }
+
+  function confirmEmail() {
+    if (address.email !== email) {
+      // error message: email doesn't match.
+    }
+  }
+
   return (
     <>
       <h2>Checkout Form</h2>
@@ -20,20 +29,22 @@ const Checkout = ({address, setAddress, order, setOrder, orders, setOrders}) => 
         <h4 className="mb-3">Billing address</h4>
         <form onSubmit={toConfirmation} className="needs-validation">
           <div className="row g-3">
-          <div class="col-6">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com" value={address.email} onChange={event => setAddress({...address, email: event.target.value})} required/>
-              <div class="invalid-feedback">
+          <div className="col-6">
+              <label htmlFor="email" className="form-label">Email</label>
+              <input type="email" className="form-control" id="email" placeholder="you@example.com" value={address.email} onChange={event => setAddress({...address, email: event.target.value})} required/>
+              <div className="invalid-feedback">
                 Please enter a valid email address for shipping updates.
               </div>
             </div>
-            <div class="col-6">
-              <label htmlFor="phone" class="form-label">Phone</label>
-              <input type="text" class="form-control" id="email" value={address.phone} onChange={event => setAddress({...address, phone: event.target.value})} required/>
-              <div class="invalid-feedback">
-                Please enter a valid phone number for shipping updates.
+
+            <div className="col-6">
+              <label htmlFor="email" className="form-label">Confirm Email</label>
+              <input type="email" className="form-control" id="email" placeholder="you@example.com" value={email} onChange={event => setEmail(event.target.value)} required/>
+              <div className="invalid-feedback">
+                Please enter a valid email address for shipping updates.
               </div>
             </div>
+           
             <div className="col-sm-6">
               <label htmlFor="firstName" className="form-label">First name</label>
               <input type="text" className="form-control" id="firstName" placeholder="" value={address.firstname} onChange={event => setAddress({...address, firstname: event.target.value})} required/>
@@ -47,6 +58,14 @@ const Checkout = ({address, setAddress, order, setOrder, orders, setOrders}) => 
               <input type="text" className="form-control" id="lastName" placeholder="" value={address.lastname} onChange={event => setAddress({...address, lastname: event.target.value})} required/>
               <div className="invalid-feedback">
                 Valid last name is required.
+              </div>
+            </div>
+
+            <div className="col-6">
+              <label htmlFor="phone" className="form-label">Phone</label>
+              <input type="text" className="form-control" id="email" value={address.phone} onChange={event => setAddress({...address, phone: event.target.value})} required/>
+              <div className="invalid-feedback">
+                Please enter a valid phone number for shipping updates.
               </div>
             </div>
 
@@ -89,14 +108,15 @@ const Checkout = ({address, setAddress, order, setOrder, orders, setOrders}) => 
             </div>
 
             <div className="col-md-3">
-              <label htmlFor="zip" className="form-label">Zip</label>
-              <input type="text" className="form-control" id="zip" placeholder="" value={address.zip} onChange={event => setAddress({...address, zip: event.target.value})}required/>
+              <label htmlFor="zip" className="form-label">Postcode</label>
+              <input type="text" className="form-control" id="zip" placeholder="" value={address.postcode} onChange={event => setAddress({...address, postcode: event.target.value})}required/>
               <div className="invalid-feedback">
-                Zip code required.
+                Post code required.
               </div>
             </div>
           </div>
           <hr className="my-4"/>
+          <h4 className="mb-3">Total Payable: $</h4>
 
           <button className="w-100 btn btn-warning btn-lg" type="submit">Place Order</button>
         </form>

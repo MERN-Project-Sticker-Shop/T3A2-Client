@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import AddedProduct from './AddedProduct'
 
-const Cart = ({cart, setCart, order, setOrder}) => {
+const Cart = ({cart, setCart, addCartToOrder}) => {
 
   const nav = useNavigate()
 
@@ -37,7 +37,7 @@ const Cart = ({cart, setCart, order, setOrder}) => {
   const payable = subtotals.reduce((partialSum, additional) => partialSum + additional, 0)
 
   function toCheckout() {
-    setOrder({...order, products: readyCart})
+    addCartToOrder(readyCart)
     nav('/checkout')
   }
 
