@@ -6,7 +6,7 @@ const Cart = ({cart, setCart, addCartToOrder, setTotal}) => {
 
   const nav = useNavigate()
 
-// **** Need to pass the whole product object into cart for the sorting of duplicates to work, otherwise None of the methods (using Set, Map, filter, and includes) will work with the duplicates
+// **** Need to pass the whole product object into cart for the filtering of duplicates to work, otherwise None of the methods (using Set, Map, filter, indexOf and includes) will work with the duplicates.
 
   // sort the cart for duplicated products using a new set cart
 const sortedCart = new Set()
