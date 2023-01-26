@@ -8,13 +8,16 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
 
   useEffect(() => {
     addAddressToOrder(address)
+     }, [address])
+
+  useEffect(() => {
     addTotalToOrder(total)
-     }, [address, total])
+  }, [])
 
   const nav = useNavigate()
   const [email, setEmail] = useState("")
 
-  function toConfirmation() {
+  function toConfirmation() { 
     addOrderToOrders(order)
     nav('/confirmation')
   }
@@ -126,13 +129,13 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
           <hr className="my-4"/>
 
           <h4 className="mb-3">Summary</h4>
-          <div class="row mb-3 text-center">
-            <div class="col-4 themed-grid-col "><h5>Product</h5></div>
-            <div class="col-4 themed-grid-col"><h5>Quantity</h5></div>
-            <div class="col-4 themed-grid-col"><h5>Subtotal</h5></div>
+          <div className="row mb-3 text-center">
+            <div className="col-4 themed-grid-col "><h5>Product</h5></div>
+            <div className="col-4 themed-grid-col"><h5>Quantity</h5></div>
+            <div className="col-4 themed-grid-col"><h5>Subtotal</h5></div>
           </div>
 
-          {order.cart.map(item => <div key={item.product} class="row mb-3 text-center"><Summary item={item}/></div>)}
+          {order.cart.map(item => <div key={item.name} className="row mb-3 text-center"><Summary item={item}/></div>)}
 
           <hr className="my-4"/>
           <h4 className="mb-3">Total Payable: ${total}</h4>

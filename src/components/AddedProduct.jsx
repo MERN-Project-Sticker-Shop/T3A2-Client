@@ -40,8 +40,8 @@ const AddedProduct = ({item, setCart, cart}) => {
             <div className="row d-flex justify-content-between align-items-center">
               <div className="col-md-2 col-lg-2 col-xl-2">
                 <img
-                  src={item.imageLink}
-                  className="img-fluid rounded-3" alt="Cotton T-shirt"/>
+                  src={item.imageLinks[0]}
+                  className="img-fluid rounded-3" alt="Product image"/>
               </div>
               <div className="col-md-3 col-lg-3 col-xl-3">
                 <p className="lead fw-normal mb-2">{item.product}</p>
