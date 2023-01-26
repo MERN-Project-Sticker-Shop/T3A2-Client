@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Trash from '../assets/trash3.svg'
 import Plus from '../assets/plus-square.svg'
 import Minus from '../assets/dash-square.svg'
 
-const AddedProduct = ({item, setCart, cart, setSubtotal}) => {
+const AddedProduct = ({item, setCart, cart}) => {
 
   const [quantity, setQuantity] = useState(item.counts)
 
@@ -33,16 +33,6 @@ const AddedProduct = ({item, setCart, cart, setSubtotal}) => {
     const difference = cart.filter(product => !toRemove.includes(product))
     setCart(difference)
   }
-
-//   useEffect(() => {
-    
-//       increaseQuantity()
-//       decreaseQuantity()
-//       deleteProduct()
-//       setSubtotal(quantity*item.price)
-//   },[cart])
-
-
 
 
   return (

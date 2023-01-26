@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 
 const Confirmation = ({setCart, newAddress, orders, setAddress}) => {
 
-    function addOrderAndResetCart() {
+    function ResetCart() {
         console.log(orders)
         setCart([])
         setAddress(newAddress)
     }
 
-    useEffect(() => addOrderAndResetCart(), [orders])
+    useEffect(() => ResetCart(), [orders])
 
     
 
