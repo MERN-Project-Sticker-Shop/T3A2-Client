@@ -18,6 +18,10 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
     nav('/confirmation')
   }
 
+  function backToCart() {
+    nav('/cart')
+  }
+
   function confirmEmail() {
     if (address.email !== email) {
       // error message: email doesn't match.
@@ -122,6 +126,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
           <h4 className="mb-3">Total Payable: ${total}</h4>
 
           <button className="w-100 btn btn-warning btn-lg" type="submit">Place Order</button>
+          <button onClick={backToCart} className="w-100 btn mt-3 btn-primary btn-lg">Back to Cart</button>
         </form>
       </div>
     </div>
