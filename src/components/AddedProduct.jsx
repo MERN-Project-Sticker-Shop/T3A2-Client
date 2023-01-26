@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Trash from '../assets/trash3.svg'
 import Plus from '../assets/plus-square.svg'
 import Minus from '../assets/dash-square.svg'
 
-const AddedProduct = ({item, setCart, cart, getSubtotals}) => {
+const AddedProduct = ({item, setCart, cart, setSubtotal}) => {
 
   const [quantity, setQuantity] = useState(item.counts)
 
-// **** Bug to be fixed: when the quantities are being modified, products in cart swap places when they reach the same quantity
+  // **** To Debug: when the quantities are being modified, products in cart swap places when they reach the same quantity
+  
   function increaseQuantity () {
     setQuantity(quantity+1)
     setCart([...cart,item])
@@ -33,7 +34,16 @@ const AddedProduct = ({item, setCart, cart, getSubtotals}) => {
     setCart(difference)
   }
 
-//   getSubtotals(quantity, item.price)
+//   useEffect(() => {
+    
+//       increaseQuantity()
+//       decreaseQuantity()
+//       deleteProduct()
+//       setSubtotal(quantity*item.price)
+//   },[cart])
+
+
+
 
   return (
           <div className="card-body p-4">
@@ -52,7 +62,7 @@ const AddedProduct = ({item, setCart, cart, getSubtotals}) => {
                   <img width="30vh" src={Minus} alt="minus one"/>
                 </button>
 
-                <input min="1"  value={quantity} className="form-control" />
+                <input min="1"  value={quantity} readOnly={true} className="form-control" />
 
                 <button onClick={increaseQuantity} className="btn btn-link px-2">
                   <img width="30vh" src={Plus} alt="add one"/>

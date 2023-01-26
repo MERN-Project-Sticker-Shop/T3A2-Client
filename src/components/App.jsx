@@ -6,6 +6,8 @@ import Home from './Home'
 import Product from './Product'
 import OrderHistory from './OrderHistory'
 import Cart from './Cart'
+import Checkout from './Checkout'
+import Confirmation from './Confirmation'
 
 const products = [
   {id: 1001, 
@@ -49,10 +51,27 @@ const products = [
             "https://plus.unsplash.com/premium_photo-1661591302882-4fe3ee5c81da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzF8fHJpYmJvbnMlMjBhbmQlMjBoZWFydHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"]}
 ]
 
+const newAddress = {
+  firstname: "",
+  lastname: "",
+  address: "",
+  address2: "",
+  suburb: "",
+  state: "",
+  zip: ""
+}
+
+const newOrder = {
+  products: [],
+  address: {}
+}
+
 const App = () => {
 
   const [cart, setCart] = useState([])
   const cart_num = cart.length
+  const [order, setOrder] = useState(newOrder)
+  const [address, setAddress] = useState(newAddress)
 
   function addToCart(product) {
       setCart([...cart, product])
@@ -71,7 +90,9 @@ const App = () => {
         <Route path='/' element={<Home products={products}/>}/>
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
         <Route path='/order-history' element={<OrderHistory/>} />
-        <Route path='/cart' element={<Cart cart={cart} setCart={setCart}/>} />
+        <Route path='/cart' element={<Cart cart={cart} setCart={setCart} order={order} setOrder={setOrder}/> } />
+        <Route path='/checkout' element={<Checkout address={address} setAddress={setAddress}/>}/>
+        <Route path='/confirmation' element={<Confirmation setCart={setCart} address={address} order={order} setOrder={setOrder}/>}/>
         <Route path='*' element={<h3>Page Not Found!</h3>} />
       </Routes>
       <Contact />
