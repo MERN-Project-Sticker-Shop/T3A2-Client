@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 
-const Confirmation = ({setCart, address, order, setOrder}) => {
+const Confirmation = ({setCart, newAddress, orders, setAddress}) => {
 
     function addOrderAndResetCart() {
-        setOrder({...order, address: address})
+        console.log(orders)
         setCart([])
-        console.log(order)
+        setAddress(newAddress)
     }
 
-    useEffect(() => addOrderAndResetCart(), [])
+    useEffect(() => addOrderAndResetCart(), [orders])
+
     
 
   return (

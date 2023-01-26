@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Checkout = ({address, setAddress}) => {
+const Checkout = ({address, setAddress, order, setOrder, orders, setOrders}) => {
 
-
+  useEffect(() => setOrder({...order, address: address}), [address])
 
   const nav = useNavigate()
 
-
   function toConfirmation() {
+    setOrders([...orders, order])
     nav('/confirmation')
-    console.log(address)
+   
   }
   return (
     <>
