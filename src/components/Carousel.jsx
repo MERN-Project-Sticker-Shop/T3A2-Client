@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Carousel = ({ imageLink }) => {
+const Carousel = ({ imageLinks }) => {
   return (
     <div id="carouselExampleIndicators" className="carousel slide">
   <div className="carousel-indicators">
@@ -10,13 +10,13 @@ const Carousel = ({ imageLink }) => {
   </div>
   <div className="carousel-inner">
     <div className="carousel-item active">
-      <img src={imageLink[0]} className="d-block w-100" alt="..."/>
+      <img src={imageLinks[0]} className="d-block w-100" alt="..."/>
     </div>
     <div className="carousel-item">
-      <img src={imageLink[1]} className="d-block w-100" alt="..."/>
+      <img src={imageLinks[1]} className="d-block w-100" alt="..."/>
     </div>
     <div className="carousel-item">
-      <img src={imageLink[2]} className="d-block w-100" alt="..."/>
+      <img src={imageLinks[2]} className="d-block w-100" alt="..."/>
     </div>
   </div>
   <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
