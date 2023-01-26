@@ -5,7 +5,7 @@ import Minus from '../assets/dash-square.svg'
 
 const AddedProduct = ({item, setCart, cart}) => {
 
-  const [quantity, setQuantity] = useState(item.counts)
+  const [quantity, setQuantity] = useState(item.quantity)
 
   // **** To Debug: when the quantities are being modified, products in cart swap places when they reach the same quantity
   
@@ -29,7 +29,7 @@ const AddedProduct = ({item, setCart, cart}) => {
   }
 
   function deleteProduct() {
-    const toRemove = cart.filter(product => product.id == item.id)
+    const toRemove = cart.filter(product => product.name == item.name)
     const difference = cart.filter(product => !toRemove.includes(product))
     setCart(difference)
   }
@@ -40,11 +40,11 @@ const AddedProduct = ({item, setCart, cart}) => {
             <div className="row d-flex justify-content-between align-items-center">
               <div className="col-md-2 col-lg-2 col-xl-2">
                 <img
-                  src={item.imageLink[0]}
+                  src={item.imageLink}
                   className="img-fluid rounded-3" alt="Cotton T-shirt"/>
               </div>
               <div className="col-md-3 col-lg-3 col-xl-3">
-                <p className="lead fw-normal mb-2">{item.name}</p>
+                <p className="lead fw-normal mb-2">{item.product}</p>
                 <p><span className="text-muted">Price: </span>$ {item.price} </p>
               </div>
               <div className="col-md-3 col-lg-3 col-xl-2 d-flex">

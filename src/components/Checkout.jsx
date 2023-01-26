@@ -20,6 +20,20 @@ const Checkout = ({address, setAddress, order, setOrder, orders, setOrders}) => 
         <h4 className="mb-3">Billing address</h4>
         <form onSubmit={toConfirmation} className="needs-validation">
           <div className="row g-3">
+          <div class="col-6">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="you@example.com" value={address.email} onChange={event => setAddress({...address, email: event.target.value})} required/>
+              <div class="invalid-feedback">
+                Please enter a valid email address for shipping updates.
+              </div>
+            </div>
+            <div class="col-6">
+              <label htmlFor="phone" class="form-label">Phone</label>
+              <input type="text" class="form-control" id="email" value={address.phone} onChange={event => setAddress({...address, phone: event.target.value})} required/>
+              <div class="invalid-feedback">
+                Please enter a valid phone number for shipping updates.
+              </div>
+            </div>
             <div className="col-sm-6">
               <label htmlFor="firstName" className="form-label">First name</label>
               <input type="text" className="form-control" id="firstName" placeholder="" value={address.firstname} onChange={event => setAddress({...address, firstname: event.target.value})} required/>

@@ -5,13 +5,18 @@ const Product = ({product, addToCart}) => {
 
   function addProduct(event) {
     event.preventDefault()
-    addToCart(product)
+    const cartItem = {
+      product: product.name,
+      price: product.price,
+      imageLink: product.imageLinks[0]
+    }
+    addToCart(cartItem)
   }
   
   return (
     <>
         <div style={{width: "75vw"}} className="container">
-            <Carousel imageLink={product.imageLink}/>
+            <Carousel imageLinks={product.imageLinks}/>
         </div>
         <h2>{product.name}</h2>
         <h3>Price: $ {product.price}</h3>
