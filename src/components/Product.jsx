@@ -5,12 +5,13 @@ const Product = ({product, addProductToCart}) => {
 
   function addProduct(event) {
     event.preventDefault()
-    // const cartItem = {
-    //   product: product.name,
-    //   price: product.price,
-    //   imageLink: product.imageLinks[0]
-    // }
-    addProductToCart(product)
+    const cartItem = {
+      product: product.name,
+      price: product.price,
+      imageLink: product.imageLinks[0],
+      quantity: 1
+    }
+      addProductToCart(cartItem)
   }
   
   return (

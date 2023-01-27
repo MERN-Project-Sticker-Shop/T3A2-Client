@@ -79,11 +79,16 @@ const App = () => {
   const [total, setTotal] = useState(0)
 
   function addProductToCart(product) {
+    const addedItem = cart.find(item => item.product === product.product)
+    if (addedItem) {
+      addedItem.quantity = addedItem.quantity + 1
+    } else {
       setCart([...cart, product])
+    }
   }
 
-  function addCartToOrder(readyCart) {
-    setOrder({...order, cart: readyCart})
+  function addCartToOrder(cart) {
+    setOrder({...order, cart: cart})
   }
 
   function addAddressToOrder(address) {
@@ -101,7 +106,7 @@ const App = () => {
   const ProductWrapper = () => {
     const { id } = useParams()
     const product = products.find(product => product.id == id)
-    return product ? <Product product={product} addProductToCart={addProductToCart}/> : <h3>Product Not Found!</h3>
+    return product ? <Product product={product} addProductToCart={addProductToCart} cart={cart}/> : <h3>Product Not Found!</h3>
   }
 
   return (
