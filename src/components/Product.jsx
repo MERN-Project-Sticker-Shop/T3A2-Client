@@ -1,16 +1,16 @@
 import React from 'react'
 import Carousel from './Carousel'
 
-const Product = ({product, addToCart}) => {
+const Product = ({product, addProductToCart}) => {
 
   function addProduct(event) {
     event.preventDefault()
-    const cartItem = {
-      product: product.name,
-      price: product.price,
-      imageLink: product.imageLinks[0]
-    }
-    addToCart(cartItem)
+    // const cartItem = {
+    //   product: product.name,
+    //   price: product.price,
+    //   imageLink: product.imageLinks[0]
+    // }
+    addProductToCart(product)
   }
   
   return (
