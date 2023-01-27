@@ -135,7 +135,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
             <div className="col-4 themed-grid-col"><h5>Subtotal</h5></div>
           </div>
 
-          {order.cart.map(item => <div key={item.name} className="row mb-3 text-center"><Summary item={item}/></div>)}
+          {order.cart.map(item => <div key={item.product} className="row mb-3 text-center"><Summary item={item}/></div>)}
 
           <hr className="my-4"/>
           <h4 className="mb-3">Total Payable: ${total}</h4>
