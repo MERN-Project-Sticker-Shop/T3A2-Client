@@ -33,7 +33,7 @@ const AddedProduct = ({item, setCart, cart}) => {
               </div>
               <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
 
-                <input min="1"  value={quantity} onChange={event => setQuantity(event.target.value)} className="form-control" />
+                <input typ="number" min="1"  value={quantity} onChange={event => setQuantity(parseInt(event.target.value))} className="form-control" />
 
               </div>
               <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
