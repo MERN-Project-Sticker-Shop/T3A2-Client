@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Routes, Route, useParams } from 'react-router-dom'
 import Navbar from './Navbar'
 import Contact from './Contact'
@@ -72,7 +72,7 @@ const newOrder = {
 const App = () => {
 
   const [cart, setCart] = useState([])
-  const cart_num = cart.length
+  const [cart_count, setCart_Count] = useState(0)
   const [order, setOrder] = useState(newOrder)
   const [address, setAddress] = useState(newAddress)
   const [orders, setOrders] = useState([])
@@ -82,9 +82,17 @@ const App = () => {
     const addedItem = cart.find(item => item.product === product.product)
     if (addedItem) {
       addedItem.quantity = addedItem.quantity + 1
+      setCart_Count(cart_count + 1)
     } else {
       setCart([...cart, product])
     }
+  }
+
+  function calcCartCount() {
+    let sum = []
+    cart.forEach(item => sum.push(item.quantity))
+    const countAll = sum.reduce((partialSum, additional) => partialSum + additional, 0)
+    setCart_Count(countAll)
   }
 
   function addCartToOrder(cart) {
@@ -109,14 +117,16 @@ const App = () => {
     return product ? <Product product={product} addProductToCart={addProductToCart} cart={cart}/> : <h3>Product Not Found!</h3>
   }
 
+  useEffect(() => calcCartCount())
+
   return (
     <>
-      <Navbar cart_num={cart_num}/>
+      <Navbar cart_count={cart_count}/>
       <Routes>
         <Route path='/' element={<Home products={products}/>}/>
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
         <Route path='/order-history' element={<OrderHistory/>} />
-        <Route path='/cart' element={<Cart cart={cart} setCart={setCart} addCartToOrder={addCartToOrder} setTotal={setTotal}/> } />
+        <Route path='/cart' element={<Cart cart={cart} setCart={setCart} addCartToOrder={addCartToOrder} setTotal={setTotal} /> } />
         <Route path='/checkout' element={<Checkout address={address} setAddress={setAddress} addAddressToOrder={addAddressToOrder} total={total} addTotalToOrder={addTotalToOrder} order={order} setOrder={setOrder} addOrderToOrders={addOrderToOrders}/>}/>
         <Route path='/confirmation' element={<Confirmation setCart={setCart} orders={orders} setAddress={setAddress} newAddress={newAddress}/>}/>
         <Route path='*' element={<h3>Page Not Found!</h3>} />

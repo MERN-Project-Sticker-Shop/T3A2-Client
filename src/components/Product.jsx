@@ -11,7 +11,8 @@ const Product = ({product, addProductToCart}) => {
       imageLink: product.imageLinks[0],
       quantity: 1
     }
-      addProductToCart(cartItem)
+
+    addProductToCart(cartItem)
   }
   
   return (

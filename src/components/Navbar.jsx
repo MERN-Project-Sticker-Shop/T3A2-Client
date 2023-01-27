@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { HashLink } from 'react-router-hash-link'
 
-const Navbar = ({cart_num}) => {
+const Navbar = ({cart_count}) => {
   return (
     <div className="container">
     <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -15,7 +15,7 @@ const Navbar = ({cart_num}) => {
         <li className="nav-item"><Link to="/" className="nav-link" aria-current="page">Home</Link></li>
         <li className="nav-item"><HashLink to="/#product-start" className="nav-link">Products</HashLink></li>
         <li className="nav-item"><Link to="/order-history" className="nav-link">Order History</Link></li>
-        { cart_num > 0 ? <li className="nav-item"><Link to="/cart" className="nav-link"> Cart<span className="badge badge-pill bg-warning">{cart_num}</span></Link></li> : <li className="nav-item"><Link to="/cart" className="nav-link"> Cart</Link></li> }
+        { cart_count > 0 ? <li className="nav-item"><Link to="/cart" className="nav-link"> Cart<div className="badge badge-pill bg-warning">{cart_count}</div></Link></li> : <li className="nav-item"><Link to="/cart" className="nav-link"> Cart</Link></li> }
       </ul>
     </header>
   </div>
