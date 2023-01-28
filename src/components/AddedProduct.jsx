@@ -4,14 +4,37 @@ import Trash from '../assets/trash3.svg'
 const AddedProduct = ({item, setCart, cart}) => {
 
   const [quantity, setQuantity] = useState(item.quantity)
+  const [error, setError] = useState()
+
+  const checkValidation = () => {
+    setError(null)
+    const cond = "^[0-9]*$"
+    const inputData = quantity.toString()
+    if(!inputData.match(cond)){
+      setError("Quantity can only be a positive integer")
+    }
+  }
 
   // when the quantity of a certain product is changed by input, update item.quantity and also cart for display of subtotal
   useEffect(() => {
+    if (!isNaN(quantity)) {
     item.quantity = quantity
     const updatedCart = cart.map(cartItem => cartItem.product === item.product ? {...cartItem, quantity: quantity} : cartItem)
     setCart(updatedCart)
+    }
   }, [quantity])
 
+  useEffect(() => checkValidation(), [quantity])
+
+  function handleInputQuantity(event) {
+    const inputData = event.target.value.trim()
+    if (isNaN(inputData) || !inputData) {
+      setQuantity("--")
+    } else {
+      setQuantity(parseInt(inputData))
+    }
+  }
+  
   function deleteProduct() {
     const index = cart.indexOf(item)
     if (index >=0 && index < cart.length) {
@@ -33,11 +56,12 @@ const AddedProduct = ({item, setCart, cart}) => {
               </div>
               <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
 
-                <input typ="number" min="1"  value={quantity} onChange={event => setQuantity(parseInt(event.target.value))} className="form-control" />
+                <input typ="number" min="1"  value={quantity} onChange={handleInputQuantity} className="form-control" />
+                {error && <div class="alert alert-info" role="alert">{error}</div>}
 
               </div>
               <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 className="mt-3">Subtotal: ${item.price * quantity}</h5>
+                <h5 className="mt-3">Subtotal: ${isNaN(quantity) ? "--" : item.price * quantity}</h5>
               </div>
               <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                 <button onClick={deleteProduct} className="btn btn-link px-2"><img src={Trash} width="30vh" alt="trash-icon"/></button>
