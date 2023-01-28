@@ -49,7 +49,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
                 required: true, 
                 pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
                 })}/>
-              {errors.email && <p>Invalid email address</p>}
+              {errors.email && <p className="alert alert-info">Invalid email address</p>}
             </div>
 
             <div className="col-6">
@@ -57,7 +57,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
               <input type="email" className="form-control" id="email" placeholder="you@example.com" defaultValue="" {...register("confirmEmail", { 
                 validate: (value) => value === watch('email')
                 })}/>
-              {errors.confirmEmail && <p>Input doesn't match email address</p>}
+              {errors.confirmEmail && <p className="alert alert-danger">Input doesn't match email address</p>}
             </div>
            
             <div className="col-sm-6">
@@ -67,7 +67,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
                 pattern: /^[A-Z]*$/i,
                 minLength: 2
                 })}/>
-              {errors.firstname && <p>Invalid first name</p>}
+              {errors.firstname && <p className="alert alert-info">Invalid first name</p>}
             </div>
 
             <div className="col-sm-6">
@@ -77,7 +77,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
                 pattern: /^[A-Z]*$/i,
                 minLength: 2
                 })}/>
-              {errors.lastname && <p>Invalid last name</p>}
+              {errors.lastname && <p className="alert alert-info">Invalid last name</p>}
             </div>
 
             <div className="col-6">
@@ -87,7 +87,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
                 pattern: /^[0-9]*$/i,
                 minLength: 10
                 })}/>
-              {errors.phone && <p>Invalid phone number</p>}
+              {errors.phone && <p className="alert alert-info">Invalid phone number</p>}
             </div>
 
             <div className="col-12">
@@ -96,7 +96,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
                 required: true, 
                 pattern: /^[A-Za-z0-9'\.\-\s\,]*$/i
                 })}/>
-              {errors.address && <p>Invalid address</p>}
+              {errors.address && <p className="alert alert-info">Invalid address</p>}
             </div>
 
             <div className="col-12">
@@ -104,7 +104,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
               <input type="text" className="form-control" id="address2" placeholder="Apartment or suite" defaultValue="" {...register("address2", { 
                 pattern: /^[A-Za-z0-9'\.\-\s\,]*$/i
                 })}/>
-              {errors.address2 && <p>Invalid address</p>}
+              {errors.address2 && <p className="alert alert-info">Invalid address</p>}
             </div>
 
             <div className="col-md-5">
@@ -113,7 +113,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
                 required: true,
                 pattern: /^[A-Za-z'\.\-\s\,]*$/i
                 })}/>
-              {errors.suburb && <p>Invalid suburb</p>}
+              {errors.suburb && <p className="alert alert-info">Invalid suburb</p>}
             </div>
 
             <div className="col-md-4">
@@ -128,7 +128,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
                 <option>TAS</option>
                 <option>NT</option>
               </select>
-              {errors.state && <p>Please select a state</p>}
+              {errors.state && <p className="alert alert-info">Please select a state</p>}
             </div>
 
             <div className="col-md-3">
@@ -139,7 +139,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
                 minLength: 4,
                 maxLength: 4
                 })}/>
-              {errors.postcode && <p>Invalid Australian postcode</p>}
+              {errors.postcode && <p className="alert alert-info">Invalid Australian postcode</p>}
             </div>
           </div>
           <hr className="my-4"/>
