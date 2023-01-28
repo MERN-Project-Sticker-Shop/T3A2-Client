@@ -26,7 +26,7 @@ const AddedProduct = ({item, setCart, cart}) => {
 
   function handleInputQuantity(event) {
     const inputData = event.target.value.trim()
-    if (isNaN(inputData) || !inputData) {
+    if (isNaN(inputData) || !inputData || inputData === "0") {
       setQuantity("--")
     } else {
       setQuantity(parseInt(inputData))
