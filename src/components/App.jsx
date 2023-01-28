@@ -53,6 +53,7 @@ const products = [
 
 const newAddress = {
   email: "",
+  confirmEmail: "",
   phone: "",
   firstname: "",
   lastname: "",
