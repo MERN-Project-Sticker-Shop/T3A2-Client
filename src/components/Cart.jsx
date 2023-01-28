@@ -22,9 +22,9 @@ const Cart = ({cart, setCart, addCartToOrder, setTotal}) => {
   }, [cart])
 
   function toCheckout() {
-    addCartToOrder(cart)
     if (!isNaN(payable)) {
-    nav('/checkout')
+      addCartToOrder(cart)
+      nav('/checkout')
     }
   }
 
