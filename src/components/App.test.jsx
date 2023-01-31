@@ -45,6 +45,7 @@ describe('View products', () => {
             expect(album).toContainElement(buttons[index])
         })
     })
+    // In Detail page:
     it('Show detail page of first product when a corresponding "View Details" is clicked', async () => {
         const toDetails = screen.getAllByText('View Details')
         const toFirstProduct = toDetails[0]
@@ -67,4 +68,51 @@ describe('View products', () => {
         expect(button).toBeDefined()
         expect(button).toHaveTextContent('Add to Cart')
     })
+})
+
+// Integration test: User can add product to cart by clicking the 'Add to Cart' button and manipulate the selected product
+describe('Add the first product to cart', () => {
+    let container
+
+    beforeEach(async function() {
+        container = render(<BrowserRouter><App /></BrowserRouter>).container
+        const button = container.querySelector('#add-product')
+        await userEvent.click(button)
+    })
+    it('Click "Add to Cart" and cart notification in Navbar will be updated', () => {
+
+        const notification = container.querySelector('#cart-notification')
+        expect(notification).toHaveTextContent('1')
+    })
+    it('Added product will show up in cart', async () => {
+        const cart = container.querySelector('#to-cart')
+        await userEvent.click(cart)
+        
+        const title = container.querySelector('h2')
+        expect(title).toHaveTextContent('Cart')
+
+        const productName = container.querySelector('#product-name-in-cart')
+        expect(productName).toBeDefined()
+        expect(productName).toHaveTextContent('Flower Stickers')
+
+        const productPrice = container.querySelector('#product-price-in-cart')
+        expect(productPrice).toBeDefined()
+        expect(productPrice).toHaveTextContent('Price: $ 5.5')
+
+        const quantity = container.querySelector('input')
+        expect(quantity).toBeDefined()
+        expect(quantity).toHaveValue('1')
+
+        await userEvent.type(quantity, '3')
+        expect(quantity).toHaveValue('13')
+
+        const subtotal = container.querySelector('#cart-subtotal')
+        expect(subtotal).toBeDefined()
+        expect(subtotal).toHaveTextContent('Subtotal: $71.5')
+
+        const total = container.querySelector('#cart-total')
+        expect(total).toBeDefined()
+        expect(total).toHaveTextContent('Total Payable: $71.5')
+    })
+
 })
