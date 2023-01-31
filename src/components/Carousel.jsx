@@ -10,13 +10,13 @@ const Carousel = ({ imageLinks }) => {
       </div>
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src={imageLinks[0]} className="d-block w-100" alt="..."/>
+          <img src={imageLinks[0]} className="d-block w-100" alt="product-detail-image"/>
         </div>
         <div className="carousel-item">
-          <img src={imageLinks[1]} className="d-block w-100" alt="..."/>
+          <img src={imageLinks[1]} className="d-block w-100" alt="product-detail-image"/>
         </div>
         <div className="carousel-item">
-          <img src={imageLinks[2]} className="d-block w-100" alt="..."/>
+          <img src={imageLinks[2]} className="d-block w-100" alt="product-detail-image"/>
         </div>
       </div>
       <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

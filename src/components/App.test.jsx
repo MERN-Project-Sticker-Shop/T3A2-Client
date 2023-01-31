@@ -4,12 +4,14 @@ import  userEvent  from "@testing-library/user-event"
 import { BrowserRouter } from "react-router-dom"
 import App from './App' 
 
-describe('App Component', () => {
+// Integration Test: Users can view a list of product in Home page and view product details in Detail page for each product
+describe('View products', () => {
     let container
 
     beforeEach(function() {
         container = render(<BrowserRouter><App /></BrowserRouter>).container
     })
+    // In Home Page:
     it('Shows the Sticker Shop Brand heading', () => {
         expect(container.querySelector('h1')).toBeDefined()
         expect(container.querySelector('h1')).toHaveTextContent('The Sticker Brand')
@@ -47,7 +49,22 @@ describe('App Component', () => {
         const toDetails = screen.getAllByText('View Details')
         const toFirstProduct = toDetails[0]
         await userEvent.click(toFirstProduct)
-        const carousel = container.querySelector('.carousel-inner')
-        expect(carousel).toBeDefined()
+
+        const detailImages = screen.getAllByAltText('product-detail-image')
+        const productName = container.querySelector('.product-detail-name')
+        const productPrice = container.querySelector('.product-detail-price')
+        const description = container.querySelector('.detail-description')
+        const button = container.querySelector('#add-product')
+
+        expect(detailImages).toBeDefined()
+        expect(detailImages).toHaveLength(3)
+        expect(productName).toBeDefined()
+        expect(productName).toHaveTextContent('Flower Stickers')
+        expect(productPrice).toBeDefined()
+        expect(productPrice).toHaveTextContent('Price: $ 5.5')
+        expect(description).toBeDefined()
+        expect(description.innerHTML.length).toBeGreaterThanOrEqual(15)
+        expect(button).toBeDefined()
+        expect(button).toHaveTextContent('Add to Cart')
     })
 })
