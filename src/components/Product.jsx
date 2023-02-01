@@ -11,6 +11,7 @@ const Product = ({product, addProductToCart}) => {
       imageLink: product.imageLinks[0],
       quantity: 1
     }
+    console.log(cartItem)
 
     addProductToCart(cartItem)
   }
