@@ -70,7 +70,7 @@ describe('Checkout Component', () => {
 
         await userEvent.type(container.querySelector('#address'), "123 Main St")
 
-        await userEvent.type(container.querySelector('#address2'), "Aurora")
+        await userEvent.type(container.querySelector('#address2'), "2315 Aurora")
 
         await userEvent.type(container.querySelector('#suburb'), "Melbourne")
 

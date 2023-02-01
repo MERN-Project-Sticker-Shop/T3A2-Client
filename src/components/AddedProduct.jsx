@@ -55,7 +55,7 @@ const AddedProduct = ({item, setCart, cart}) => {
               <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
 
                 <input typ="number" min="1"  value={quantity} onChange={handleInputQuantity} className="form-control" />
-                {error && <div className="alert alert-info" role="alert">{error}</div>}
+                {error && <div id="alert" className="alert alert-info" role="alert">{error}</div>}
 
               </div>
               <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
