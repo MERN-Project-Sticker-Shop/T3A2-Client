@@ -46,23 +46,23 @@ const AddedProduct = ({item, setCart, cart}) => {
               <div className="col-md-2 col-lg-2 col-xl-2">
                 <img
                   src={item.imageLink}
-                  className="img-fluid rounded-3" alt="Product image"/>
+                  className="img-fluid rounded-3" alt="Product-image"/>
               </div>
               <div className="col-md-3 col-lg-3 col-xl-3">
-                <p className="lead fw-normal mb-2">{item.product}</p>
-                <p><span className="text-muted">Price: </span>$ {item.price} </p>
+                <p className="lead fw-normal mb-2" id="product-name-in-cart">{item.product}</p>
+                <p id="product-price-in-cart"><span className="text-muted">Price: </span>$ {item.price} </p>
               </div>
               <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
 
                 <input typ="number" min="1"  value={quantity} onChange={handleInputQuantity} className="form-control" />
-                {error && <div className="alert alert-info" role="alert">{error}</div>}
+                {error && <div id="alert" className="alert alert-info" role="alert">{error}</div>}
 
               </div>
               <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 className="mt-3">Subtotal: ${isNaN(quantity) ? "--" : item.price * quantity}</h5>
+                <h5 id="cart-subtotal" className="mt-3">Subtotal: ${isNaN(quantity) ? "--" : item.price * quantity}</h5>
               </div>
               <div className="col-md-1 col-lg-1 col-xl-1 text-end">
-                <button onClick={deleteProduct} className="btn btn-link px-2"><img src={Trash} width="30vh" alt="trash-icon"/></button>
+                <button onClick={deleteProduct} className="btn btn-link px-2"><img src={Trash} width="30vh" alt="trash-icon" id="delete-product-in-cart"/></button>
               </div>
             </div>
           </div>

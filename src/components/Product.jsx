@@ -20,16 +20,10 @@ const Product = ({product, addProductToCart}) => {
         <div style={{width: "75vw"}} className="container">
             <Carousel imageLinks={product.imageLinks}/>
         </div>
-        <h2>{product.name}</h2>
-        <h3>Price: $ {product.price}</h3>
-        <small>Product ID:{product.id}</small>
-        <p>{product.description}</p>
-        <ul>
-            <li>asdfa</li>
-            <li>qwerfdgwrwter</li>
-            <li>asdfaw4erqwer</li>
-        </ul>
-        <button onClick={addProduct} type="button" className="btn btn-primary">Add to Cart</button>
+        <h2 className="product-detail-name">{product.name}</h2>
+        <h3 className="product-detail-price">Price: $ {product.price}</h3>
+        <p className="detail-description">{product.description}</p>
+        <button id="add-product"onClick={addProduct} type="button" className="btn btn-primary">Add to Cart</button>
     </>
   )
 }

@@ -53,8 +53,8 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
             </div>
 
             <div className="col-6">
-              <label htmlFor="email" className="form-label">Confirm Email</label>
-              <input type="email" className="form-control" id="email" placeholder="you@example.com" defaultValue="" {...register("confirmEmail", { 
+              <label htmlFor="confirm-email" className="form-label">Confirm Email</label>
+              <input type="email" className="form-control" id="confirm-email" placeholder="you@example.com" defaultValue="" {...register("confirmEmail", { 
                 validate: (value) => value === watch('email')
                 })}/>
               {errors.confirmEmail && <p className="alert alert-danger">Input doesn't match email address</p>}
@@ -119,21 +119,21 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
             <div className="col-md-4">
               <label htmlFor="state" className="form-label">State</label>
               <select className="form-select" id="state" {...register("state", { validate: (value) => value.toUpperCase() === value })}>
-                <option>Please select...</option>
-                <option>VIC</option>
-                <option>NSW</option>
-                <option>WA</option>
-                <option>SA</option>
-                <option>ACT</option>
-                <option>TAS</option>
-                <option>NT</option>
+                <option value="Please select...">Please select...</option>
+                <option value="VIC">VIC</option>
+                <option value="NSW">NSW</option>
+                <option value="WA">WA</option>
+                <option value="SAA">SA</option>
+                <option value="ACT">ACT</option>
+                <option value="TAS">TAS</option>
+                <option value="NT">NT</option>
               </select>
               {errors.state && <p className="alert alert-info">Please select a state</p>}
             </div>
 
             <div className="col-md-3">
-              <label htmlFor="zip" className="form-label">Postcode</label>
-              <input type="text" className="form-control" id="zip" placeholder="" {...register("postcode", { 
+              <label htmlFor="postcode" className="form-label">Postcode</label>
+              <input type="text" className="form-control" id="postcode" placeholder="" {...register("postcode", { 
                 required: true, 
                 pattern: /^[0-9]*$/i,
                 minLength: 4,
@@ -156,7 +156,7 @@ const Checkout = ({address, setAddress, addAddressToOrder, order, total, addTota
           <hr className="my-4"/>
           <h4 className="mb-3">Total Payable: ${total}</h4>
 
-          <button className="w-100 btn btn-warning btn-lg" type="submit">Place Order</button>
+          <button className="w-100 btn btn-warning btn-lg" type="submit" id="submit">Place Order</button>
           <button onClick={backToCart} className="w-100 btn mt-3 btn-primary btn-lg">Back to Cart</button>
         </form>
       </div>
