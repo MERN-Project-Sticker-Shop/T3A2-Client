@@ -80,10 +80,22 @@ const App = () => {
   const [orders, setOrders] = useState([])
   const [total, setTotal] = useState(0)
 
-  function addProductToCart(product) {
+  async function addProductToCart(product) {
     const addedItem = cart.find(item => item.product === product.product)
     if (addedItem) {
       addedItem.quantity = addedItem.quantity + 1
+
+      const savedItem = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}/${addedItem.product}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(addedItem)
+      })
+      const data = await savedItem.json()
+      console.log(data.items)
+
       setCart_Count(cart_count + 1)
     } else {
       setCart([...cart, product])
@@ -116,7 +128,7 @@ const App = () => {
   const ProductWrapper = () => {
     const { id } = useParams()
     const product = products.find(product => product._id == id)
-    return product ? <Product product={product} addProductToCart={addProductToCart} cart={cart}/> : <h3>Product Not Found!</h3>
+    return product ? <Product product={product} addProductToCart={addProductToCart} cart={cart} cartId={cartId} setCartId={setCartId}/> : <h3>Product Not Found!</h3>
   }
 
   useEffect(() => {

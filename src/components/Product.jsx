@@ -1,9 +1,9 @@
 import React from 'react'
 import Carousel from './Carousel'
 
-const Product = ({product, addProductToCart}) => {
+const Product = ({product, addProductToCart, cartId, setCartId}) => {
 
-  function addProduct(event) {
+  async function addProduct(event) {
     event.preventDefault()
     const cartItem = {
       product: product.name,
@@ -11,9 +11,23 @@ const Product = ({product, addProductToCart}) => {
       imageLink: product.imageLinks[0],
       quantity: 1
     }
-    console.log(cartItem)
+  
+    console.log(cartId)
 
-    addProductToCart(cartItem)
+    const savedItem = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}/${cartItem.product}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(cartItem)
+    })
+    const data = await savedItem.json()
+    const dbCartItems = data.items
+    const newItem = dbCartItems.find(item => item.product === cartItem.product)
+
+    setCartId(data._id)
+    addProductToCart(newItem)
   }
   
   return (
