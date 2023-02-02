@@ -10,7 +10,7 @@ const Cart = ({cart, setCart, cartId}) => {
   // fetch cart data from db with the cartId saved in local storage
   useEffect(() => {
     async function fetchCart() {
-      if (!cartId == null) {
+      if (cartId) {
       const res = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}`)
       const data = await res.json()
       setCart(data.items)
