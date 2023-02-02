@@ -17,28 +17,33 @@ const Cart = ({cart, setCart, addCartToOrder, total, setTotal, cartId}) => {
   
   // get an array of all the subtotals
   const subtotals = []
-  let payable = 0
+  let payable
 
   // When cart is updated, update the total payable
   useEffect(() => {
     cart.forEach(item => {
       const subtotal = item.price * item.quantity
       subtotals.push(subtotal)
+      console.log(item)
     })
     payable = subtotals.reduce((partialSum, additional) => partialSum + additional, 0)
 
+    if (total !== "--") {
     setTotal(payable)
-  })
+    } else {
+      setTotal("--")
+    }
+  }, [cart])
 
   function toCheckout() {
-    if (!isNaN(payable)) {
+    if (!isNaN(total)) {
       addCartToOrder(cart)
       nav('/checkout')
     }
   }
 
   function toShopping() {
-    if (!isNaN(payable)) {
+    if (!isNaN(total)) {
     nav('/')
     }
   }
@@ -47,7 +52,7 @@ const Cart = ({cart, setCart, addCartToOrder, total, setTotal, cartId}) => {
     <>
       <h2>Cart</h2>
       <div className="container py-5 bg-light">
-        {cart.map(item => <div className="card rounded-3 mb-4" key={item.product}><AddedProduct item={item} setCart={setCart} cart={cart} cartId={cartId}/></div>)}
+        {cart.map(item => <div className="card rounded-3 mb-4" key={item.product}><AddedProduct item={item} setCart={setCart} setTotal={setTotal} cartId={cartId}/></div>)}
         <div className="card-body p-4">
             <div className="row d-flex justify-content-between align-items-center">
                 {cart.length > 0 ? <><h4 id="cart-total">Total Payable: ${isNaN(total)? "--" : total}</h4><button onClick={toCheckout} className="btn btn-warning btn-block btn-lg">Checkout</button></> : <h4>Your cart is empty.</h4>}

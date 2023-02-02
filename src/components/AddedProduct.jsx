@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Trash from '../assets/trash3.svg'
 
-const AddedProduct = ({item, setCart, cart, cartId}) => {
+const AddedProduct = ({item, setCart, setTotal, cartId}) => {
 
   const [quantity, setQuantity] = useState(item.quantity)
   const [error, setError] = useState()
@@ -36,7 +36,6 @@ const AddedProduct = ({item, setCart, cart, cartId}) => {
     }
 
     updateCartItem()
-    console.log(cart)
 
   }, [quantity])
 
@@ -44,8 +43,10 @@ const AddedProduct = ({item, setCart, cart, cartId}) => {
     const inputData = event.target.value.trim()
     if (isNaN(inputData) || !inputData || inputData === "0") {
       setQuantity("--")
+      setTotal("--")
     } else {
       setQuantity(parseInt(inputData))
+      setTotal("...")
     }
   }
   
