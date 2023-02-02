@@ -16,7 +16,7 @@ const Checkout = ({address, setAddress, cartId}) => {
   // fetch cart data for the display of purchase summary
   useEffect(() => {
     async function fetchReadyCart() {
-      const res = await fetch(`http://localhost:4001/carts/${cartId}`)
+      const res = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}`)
       const data = await res.json()
       setReadyCart(data.items)
     }
@@ -46,7 +46,7 @@ const Checkout = ({address, setAddress, cartId}) => {
 
   // create and save the input address and then create a new order
   async function createOrder(newAddr) {
-      const savedAddress = await fetch(`http://localhost:4001/orders/address`, {
+      const savedAddress = await fetch(`https://t3a2-server-production.up.railway.app/orders/address`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -63,7 +63,7 @@ const Checkout = ({address, setAddress, cartId}) => {
       cartId: cartId
     }
     
-    const savedOrder = await fetch("http://localhost:4001/orders", {
+    const savedOrder = await fetch("https://t3a2-server-production.up.railway.app/orders", {
       method: "POST",
       headers: {
         Accept: "application/json",

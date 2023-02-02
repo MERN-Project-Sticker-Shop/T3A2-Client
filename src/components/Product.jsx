@@ -13,7 +13,7 @@ const Product = ({product, addProductToCart, cartId, setCartId}) => {
       quantity: 1
      }
     
-    const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${cartItem.product}`, {
+    const savedItem = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}/${cartItem.product}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
