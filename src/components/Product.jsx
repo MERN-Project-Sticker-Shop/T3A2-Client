@@ -11,13 +11,11 @@ const Product = ({product, addProductToCart, cartId, setCartId}) => {
       imageLink: product.imageLinks[0],
       quantity: 1
     }
-  
-    // console.log(cartId)
 
-    const lsCartId = localStorage.getItem('cartId')
-    setCartId(lsCartId)
+    // const lsCartId = localStorage.getItem('cartId')
+    // setCartId(lsCartId)
     
-    const savedItem = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}/${cartItem.product}`, {
+    const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${cartItem.product}`, {
       method: "POST",
       headers: {
         Accept: "application/json",

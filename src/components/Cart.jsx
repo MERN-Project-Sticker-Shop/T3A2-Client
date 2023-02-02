@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AddedProduct from './AddedProduct'
 
-const Cart = ({cart, setCart, addCartToOrder, setTotal, cartId, setCartId}) => {
+const Cart = ({cart, setCart, addCartToOrder, setTotal, cartId}) => {
 
   const nav = useNavigate()
 
   useEffect(() => {
-    setCartId(localStorage.getItem('cartId'))
-  }, [])
-
-  useEffect(() => {
     async function fetchCart() {
-      const res = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}`)
+      const res = await fetch(`http://localhost:4001/carts/${cartId}`)
       const data = await res.json()
       setCart(data.items)
     }
     fetchCart()
-  }, [cartId])
+  }, [])
   
   // get an array of all the subtotals
   const subtotals = []
@@ -33,7 +29,7 @@ const Cart = ({cart, setCart, addCartToOrder, setTotal, cartId, setCartId}) => {
       subtotals.push(subtotal)
     })
     setTotal(payable)
-  }, [cart])
+  })
 
   function toCheckout() {
     if (!isNaN(payable)) {

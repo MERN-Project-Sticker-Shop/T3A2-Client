@@ -73,7 +73,7 @@ const newOrder = {
 const App = () => {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([])
-  const [cartId, setCartId] = useState(null)
+  const [cartId, setCartId] = useState(localStorage.getItem('cartId'))
   const [cart_count, setCart_Count] = useState(0)
   const [order, setOrder] = useState(newOrder)
   const [address, setAddress] = useState(newAddress)
@@ -85,7 +85,7 @@ const App = () => {
     if (addedItem) {
       addedItem.quantity = addedItem.quantity + 1
 
-      const savedItem = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}/${addedItem.product}`, {
+      const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${addedItem.product}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -133,7 +133,7 @@ const App = () => {
 
   useEffect(() => {
     async function fetchProducts() {
-      const res = await fetch("https://t3a2-server-production.up.railway.app/products")
+      const res = await fetch("http://localhost:4001/products")
       const data = await res.json()
       setProducts(data)
     }
@@ -149,7 +149,7 @@ const App = () => {
         <Route path='/' element={<Home products={products}/>}/>
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
         <Route path='/order-history' element={<OrderHistory/>} />
-        <Route path='/cart' element={<Cart cart={cart} setCart={setCart} addCartToOrder={addCartToOrder} setTotal={setTotal} cartId={cartId} setCartId={setCartId}/> } />
+        <Route path='/cart' element={<Cart cart={cart} setCart={setCart} addCartToOrder={addCartToOrder} setTotal={setTotal} cartId={cartId}/> } />
         <Route path='/checkout' element={<Checkout address={address} setAddress={setAddress} addAddressToOrder={addAddressToOrder} total={total} addTotalToOrder={addTotalToOrder} order={order} addOrderToOrders={addOrderToOrders}/>}/>
         <Route path='/confirmation' element={<Confirmation setCart={setCart} orders={orders} setAddress={setAddress} newAddress={newAddress}/>}/>
         <Route path='*' element={<h3>Page Not Found!</h3>} />
