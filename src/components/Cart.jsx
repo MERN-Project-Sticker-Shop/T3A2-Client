@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AddedProduct from './AddedProduct'
 
-const Cart = ({cart, setCart, addCartToOrder, total, setTotal, cartId}) => {
+const Cart = ({cart, setCart, cartId}) => {
 
   const nav = useNavigate()
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
     async function fetchCart() {
@@ -17,16 +18,14 @@ const Cart = ({cart, setCart, addCartToOrder, total, setTotal, cartId}) => {
   
   // get an array of all the subtotals
   const subtotals = []
-  let payable
 
   // When cart is updated, update the total payable
   useEffect(() => {
     cart.forEach(item => {
       const subtotal = item.price * item.quantity
       subtotals.push(subtotal)
-      console.log(item)
     })
-    payable = subtotals.reduce((partialSum, additional) => partialSum + additional, 0)
+    const payable = subtotals.reduce((partialSum, additional) => partialSum + additional, 0)
 
     if (total !== "--") {
     setTotal(payable)
@@ -37,7 +36,6 @@ const Cart = ({cart, setCart, addCartToOrder, total, setTotal, cartId}) => {
 
   function toCheckout() {
     if (!isNaN(total)) {
-      addCartToOrder(cart)
       nav('/checkout')
     }
   }

@@ -78,7 +78,7 @@ const App = () => {
   const [order, setOrder] = useState(newOrder)
   const [address, setAddress] = useState(newAddress)
   const [orders, setOrders] = useState([])
-  const [total, setTotal] = useState(0)
+  // const [total, setTotal] = useState(0)
 
   async function addProductToCart(product) {
     const addedItem = cart.find(item => item.product === product.product)
@@ -109,17 +109,17 @@ const App = () => {
     setCart_Count(countAll)
   }
 
-  function addCartToOrder(cart) {
-    setOrder({...order, cart: cart})
-  }
+  // function addCartToOrder(cart) {
+  //   setOrder({...order, cart: cart})
+  // }
 
-  function addAddressToOrder(address) {
-    setOrder({...order, address: address})
-  }
+  // function addAddressToOrder(address) {
+  //   setOrder({...order, address: address})
+  // }
 
-  function addTotalToOrder(total) {
-    setOrder({...order, total: total})
-  }
+  // function addTotalToOrder(total) {
+  //   setOrder({...order, total: total})
+  // }
 
   function addOrderToOrders(order) {
     setOrders([...orders, order])
@@ -149,8 +149,8 @@ const App = () => {
         <Route path='/' element={<Home products={products}/>}/>
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
         <Route path='/order-history' element={<OrderHistory/>} />
-        <Route path='/cart' element={<Cart cart={cart} setCart={setCart} addCartToOrder={addCartToOrder} setTotal={setTotal} total={total} cartId={cartId}/> } />
-        <Route path='/checkout' element={<Checkout address={address} setAddress={setAddress} addAddressToOrder={addAddressToOrder} total={total} addTotalToOrder={addTotalToOrder} order={order} addOrderToOrders={addOrderToOrders}/>}/>
+        <Route path='/cart' element={<Cart cart={cart} setCart={setCart} cartId={cartId}/> } />
+        <Route path='/checkout' element={<Checkout address={address} setAddress={setAddress} cartId={cartId} addOrderToOrders={addOrderToOrders}/>}/>
         <Route path='/confirmation' element={<Confirmation setCart={setCart} orders={orders} setAddress={setAddress} newAddress={newAddress}/>}/>
         <Route path='*' element={<h3>Page Not Found!</h3>} />
       </Routes>

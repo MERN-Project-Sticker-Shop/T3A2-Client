@@ -24,6 +24,7 @@ const Product = ({product, addProductToCart, cartId, setCartId}) => {
       body: JSON.stringify(cartItem)
     })
     const data = await savedItem.json()
+    console.log(data)
     const dbCartItems = data.items
     const newItem = dbCartItems.find(item => item.product === cartItem.product)
 
