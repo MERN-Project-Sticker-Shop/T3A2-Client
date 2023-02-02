@@ -6,6 +6,7 @@ const Home = ({products}) => {
 
   const [search, setSearch] = useState("")
 
+  // display products matching search keywords
   const filteredProducts = products.filter(product => product.name.toLowerCase().includes(search))
 
   return (

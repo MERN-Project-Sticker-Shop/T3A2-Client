@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Trash from '../assets/trash3.svg'
 
-const AddedProduct = ({item, setCart, cart}) => {
+const AddedProduct = ({item, setCart, setTotal, cartId}) => {
 
   const [quantity, setQuantity] = useState(item.quantity)
   const [error, setError] = useState()
 
+  // validate user input for cart item quantity
   const checkValidation = () => {
     setError(null)
     const cond = "^[0-9]*$"
@@ -15,29 +16,59 @@ const AddedProduct = ({item, setCart, cart}) => {
     }
   }
 
+  useEffect(() => checkValidation(), [quantity])
+
   // when the quantity of a certain product is changed by input, update item.quantity and also cart for display of subtotal
   useEffect(() => {
     item.quantity = quantity
-    const updatedCart = cart.map(cartItem => cartItem.product === item.product ? {...cartItem, quantity: quantity} : cartItem)
-    setCart(updatedCart)
+
+    async function updateCartItem() {
+    const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${item.product}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(item)
+    })
+    const data = await savedItem.json()
+    const dbCartItems = data.items
+    setCart(dbCartItems)
+    }
+
+    updateCartItem()
+
   }, [quantity])
 
-  useEffect(() => checkValidation(), [quantity])
-
+  // for invalid quantity input, set both quantity and total payable to be "--"
   function handleInputQuantity(event) {
     const inputData = event.target.value.trim()
     if (isNaN(inputData) || !inputData || inputData === "0") {
       setQuantity("--")
+      setTotal("--")
     } else {
       setQuantity(parseInt(inputData))
+      setTotal("...")
     }
   }
   
-  function deleteProduct() {
-    const index = cart.indexOf(item)
-    if (index >=0 && index < cart.length) {
-        setCart([...cart.slice(0, index),...cart.slice(index+1)])
-    }
+  // delete product when the trash icon is clicked and update cart
+  async function deleteProduct() {
+    const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${item.product}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(item)
+    })
+    const data = await savedItem.json()
+    const dbCartItems = data.items
+    setCart(dbCartItems)
+    // const index = cart.indexOf(item)
+    // if (index >=0 && index < cart.length) {
+    //     setCart([...cart.slice(0, index),...cart.slice(index+1)])
+    // }
   }
 
   return (

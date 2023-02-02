@@ -13,7 +13,6 @@ import Confirmation from './Confirmation'
 //   {id: 1001, 
 //     name: "Flower Stickers", 
 //     price: 5.5, 
-//     // quantity: 10,
 //     description: "Colourful spring flowers in 3 different sizes", 
 //     imageLinks: [
 //       "https://images.unsplash.com/photo-1488928741225-2aaf732c96cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjd8fGZsb3dlcnN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
@@ -23,7 +22,6 @@ import Confirmation from './Confirmation'
 //     {id: 1002, 
 //       name: "Safari Animals", 
 //       price: 6.5,
-//       // quantity: 15, 
 //       description: "Animal Characters from the Movie Madagascar", 
 //       imageLinks: [
 //         "https://images.unsplash.com/photo-1604602236223-156a7f332bc4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHNhZmFyaSUyMGFuaW1hbHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
@@ -33,7 +31,6 @@ import Confirmation from './Confirmation'
 //       {id: 1003, 
 //         name: "Super Heros", 
 //         price: 4.25,
-//         // quantity: 10, 
 //         description: "Spiderman, Ironman, Hulk, and Wonder Woman", 
 //         imageLinks: [
 //           "https://images.unsplash.com/photo-1568833450751-fba3c6b2d129?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c3VwZXJoZXJvc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
@@ -43,7 +40,6 @@ import Confirmation from './Confirmation'
 //         {id: 1004, 
 //           name: "Sparkling Decorations", 
 //           price: 5.5,
-//           // quantity: 12, 
 //           description: "Ribbons, bows, stars, and lovehearts", 
 //           imageLinks: [
 //             "https://images.unsplash.com/photo-1581022294699-89ec4e5338c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHJpYmJvbnMlMjBhbmQlMjBoZWFydHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
@@ -64,22 +60,14 @@ const newAddress = {
   postcode: ""
 }
 
-const newOrder = {
-  cart: [],
-  address: {},
-  total: 0
-}
-
 const App = () => {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([])
   const [cartId, setCartId] = useState(localStorage.getItem('cartId'))
   const [cart_count, setCart_Count] = useState(0)
-  const [order, setOrder] = useState(newOrder)
   const [address, setAddress] = useState(newAddress)
-  const [orders, setOrders] = useState([])
-  const [total, setTotal] = useState(0)
 
+  // search for the to be added product in cart, if it is already added, change quantity, else add it to cart
   async function addProductToCart(product) {
     const addedItem = cart.find(item => item.product === product.product)
     if (addedItem) {
@@ -96,33 +84,19 @@ const App = () => {
       const data = await savedItem.json()
       console.log(data.items)
 
+      // update total number of items in cart for navbar notification
       setCart_Count(cart_count + 1)
     } else {
       setCart([...cart, product])
     }
   }
 
+  // calculate the total number of added items in cart
   function calcCartCount() {
     let sum = []
     cart.forEach(item => sum.push(item.quantity))
     const countAll = sum.reduce((partialSum, additional) => partialSum + additional, 0)
     setCart_Count(countAll)
-  }
-
-  function addCartToOrder(cart) {
-    setOrder({...order, cart: cart})
-  }
-
-  function addAddressToOrder(address) {
-    setOrder({...order, address: address})
-  }
-
-  function addTotalToOrder(total) {
-    setOrder({...order, total: total})
-  }
-
-  function addOrderToOrders(order) {
-    setOrders([...orders, order])
   }
 
   const ProductWrapper = () => {
@@ -131,6 +105,7 @@ const App = () => {
     return product ? <Product product={product} addProductToCart={addProductToCart} cart={cart} cartId={cartId} setCartId={setCartId}/> : <h3>Product Not Found!</h3>
   }
 
+  // get all the products
   useEffect(() => {
     async function fetchProducts() {
       const res = await fetch("http://localhost:4001/products")
@@ -149,9 +124,9 @@ const App = () => {
         <Route path='/' element={<Home products={products}/>}/>
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
         <Route path='/order-history' element={<OrderHistory/>} />
-        <Route path='/cart' element={<Cart cart={cart} setCart={setCart} addCartToOrder={addCartToOrder} setTotal={setTotal} total={total} cartId={cartId}/> } />
-        <Route path='/checkout' element={<Checkout address={address} setAddress={setAddress} addAddressToOrder={addAddressToOrder} total={total} addTotalToOrder={addTotalToOrder} order={order} addOrderToOrders={addOrderToOrders}/>}/>
-        <Route path='/confirmation' element={<Confirmation setCart={setCart} orders={orders} setAddress={setAddress} newAddress={newAddress}/>}/>
+        <Route path='/cart' element={<Cart cart={cart} setCart={setCart} cartId={cartId}/> } />
+        <Route path='/checkout' element={<Checkout address={address} setAddress={setAddress} cartId={cartId}/>}/>
+        <Route path='/confirmation' element={<Confirmation setCart={setCart}/>}/>
         <Route path='*' element={<h3>Page Not Found!</h3>} />
       </Routes>
       <Contact />

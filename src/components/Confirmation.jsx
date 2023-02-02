@@ -1,16 +1,12 @@
 import React, { useEffect } from 'react'
 
-const Confirmation = ({setCart, newAddress, orders, setAddress}) => {
+const Confirmation = ({setCart}) => {
 
-    function ResetCart() {
-        console.log(orders)
-        setCart([])
-        setAddress(newAddress)
-    }
-
-    useEffect(() => ResetCart(), [orders])
-
-    
+  // clear the local cart and remove cart id stored in local storage
+    useEffect(() => {
+      setCart([])
+      localStorage.removeItem('cartId')
+    }, [])
 
   return (
     <>
