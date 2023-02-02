@@ -23,7 +23,7 @@ const AddedProduct = ({item, setCart, setTotal, cartId}) => {
     item.quantity = quantity
 
     async function updateCartItem() {
-    const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${item.product}`, {
+    const savedItem = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}/${item.product}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -54,7 +54,7 @@ const AddedProduct = ({item, setCart, setTotal, cartId}) => {
   
   // delete product when the trash icon is clicked and update cart
   async function deleteProduct() {
-    const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${item.product}`, {
+    const savedItem = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}/${item.product}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",

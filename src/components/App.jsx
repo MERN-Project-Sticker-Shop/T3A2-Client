@@ -73,7 +73,7 @@ const App = () => {
     if (addedItem) {
       addedItem.quantity = addedItem.quantity + 1
 
-      const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${addedItem.product}`, {
+      const savedItem = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}/${addedItem.product}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -108,7 +108,7 @@ const App = () => {
   // get all the products
   useEffect(() => {
     async function fetchProducts() {
-      const res = await fetch("http://localhost:4001/products")
+      const res = await fetch("https://t3a2-server-production.up.railway.app/products")
       const data = await res.json()
       setProducts(data)
     }
