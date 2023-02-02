@@ -49,11 +49,23 @@ const AddedProduct = ({item, setCart, cart, cartId}) => {
     }
   }
   
-  function deleteProduct() {
-    const index = cart.indexOf(item)
-    if (index >=0 && index < cart.length) {
-        setCart([...cart.slice(0, index),...cart.slice(index+1)])
-    }
+  async function deleteProduct() {
+
+    const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${item.product}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(item)
+    })
+    const data = await savedItem.json()
+    const dbCartItems = data.items
+    setCart(dbCartItems)
+    // const index = cart.indexOf(item)
+    // if (index >=0 && index < cart.length) {
+    //     setCart([...cart.slice(0, index),...cart.slice(index+1)])
+    // }
   }
 
   return (
