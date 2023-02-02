@@ -3,10 +3,24 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import Summary from './Summary'
 
-const Checkout = ({address, setAddress, cartId}) => {
+const newAddress = {
+  email: "",
+  confirmEmail: "",
+  phone: "",
+  firstname: "",
+  lastname: "",
+  address: "",
+  address2: "",
+  suburb: "",
+  state: "",
+  postcode: ""
+}
+
+const Checkout = ({ cartId }) => {
 
   const [readyCart, setReadyCart] = useState([])
   const [finalTotal, setFinalTotal] = useState()
+  const [address, setAddress] = useState(newAddress)
 
   // validate user input of address with react hook form
   const { register, handleSubmit, watch, formState: { errors } } = useForm()
