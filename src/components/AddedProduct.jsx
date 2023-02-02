@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Trash from '../assets/trash3.svg'
 
-const AddedProduct = ({item, setCart, cart}) => {
+const AddedProduct = ({item, setCart, cart, cartId}) => {
 
   const [quantity, setQuantity] = useState(item.quantity)
   const [error, setError] = useState()
@@ -15,14 +15,30 @@ const AddedProduct = ({item, setCart, cart}) => {
     }
   }
 
+  useEffect(() => checkValidation(), [quantity])
+
   // when the quantity of a certain product is changed by input, update item.quantity and also cart for display of subtotal
   useEffect(() => {
     item.quantity = quantity
-    const updatedCart = cart.map(cartItem => cartItem.product === item.product ? {...cartItem, quantity: quantity} : cartItem)
-    setCart(updatedCart)
-  }, [quantity])
 
-  useEffect(() => checkValidation(), [quantity])
+    async function updateCartItem() {
+    const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${item.product}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(item)
+    })
+    const data = await savedItem.json()
+    const dbCartItems = data.items
+    setCart(dbCartItems)
+    }
+
+    updateCartItem()
+    console.log(cart)
+
+  }, [quantity])
 
   function handleInputQuantity(event) {
     const inputData = event.target.value.trim()
