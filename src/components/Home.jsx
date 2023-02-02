@@ -24,7 +24,7 @@ const Home = ({products}) => {
             <div className="album py-5 bg-light">
                 <div className="container">
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        {filteredProducts.map(product => <div className="product-snapshot" key={product.id}><Album id={product.id} name={product.name} price={product.price} imageLink={product.imageLinks[0]}/></div>)}
+                        {filteredProducts.map(product => <div className="product-snapshot" key={product._id}><Album id={product._id} name={product.name} price={product.price} imageLink={product.imageLinks[0]}/></div>)}
                         {filteredProducts.length < 1 ? "No matching products found." : ""}
                     </div>
                 </div>

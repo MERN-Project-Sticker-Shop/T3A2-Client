@@ -1,9 +1,9 @@
 import React from 'react'
 import Carousel from './Carousel'
 
-const Product = ({product, addProductToCart}) => {
+const Product = ({product, addProductToCart, cartId, setCartId}) => {
 
-  function addProduct(event) {
+  async function addProduct(event) {
     event.preventDefault()
     const cartItem = {
       product: product.name,
@@ -12,7 +12,27 @@ const Product = ({product, addProductToCart}) => {
       quantity: 1
     }
 
-    addProductToCart(cartItem)
+    // const lsCartId = localStorage.getItem('cartId')
+    // setCartId(lsCartId)
+    
+    const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${cartItem.product}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(cartItem)
+    })
+    const data = await savedItem.json()
+    const dbCartItems = data.items
+    const newItem = dbCartItems.find(item => item.product === cartItem.product)
+
+    setCartId(data._id)
+
+    localStorage.setItem('cartId', data._id)
+    console.log(localStorage.getItem('cartId'))
+
+    addProductToCart(newItem)
   }
   
   return (
