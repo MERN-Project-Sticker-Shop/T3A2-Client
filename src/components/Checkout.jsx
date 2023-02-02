@@ -8,10 +8,12 @@ const Checkout = ({address, setAddress, cartId}) => {
   const [readyCart, setReadyCart] = useState([])
   const [finalTotal, setFinalTotal] = useState()
 
+  // validate user input of address with react hook form
   const { register, handleSubmit, watch, formState: { errors } } = useForm()
 
   let sum = []
 
+  // fetch cart data for the display of purchase summary
   useEffect(() => {
     async function fetchReadyCart() {
       const res = await fetch(`http://localhost:4001/carts/${cartId}`)
@@ -21,6 +23,7 @@ const Checkout = ({address, setAddress, cartId}) => {
     fetchReadyCart()
   }, [])
 
+  // calculate the total payable
   useEffect(() => {
     readyCart.forEach(item => {
       const sub = item.quantity * item.price
@@ -30,6 +33,7 @@ const Checkout = ({address, setAddress, cartId}) => {
     setFinalTotal(result)
   })
 
+  // watch and update address fields as users fill in the blanks
   useEffect(() => {
     const addAddress = watch(data => {
       console.log(data)
@@ -40,6 +44,7 @@ const Checkout = ({address, setAddress, cartId}) => {
 
   const nav = useNavigate()
 
+  // create and save the input address and then create a new order
   async function createOrder(newAddr) {
       const savedAddress = await fetch(`http://localhost:4001/orders/address`, {
       method: "POST",
@@ -68,13 +73,16 @@ const Checkout = ({address, setAddress, cartId}) => {
     })
     const insertedOrder = await savedOrder.json()
     console.log(insertedOrder)
+
+    // navigate to confirmation page
+    nav('/confirmation')
     }
 
   function toConfirmation() {
     createOrder(address) 
-    nav('/confirmation')
   }
 
+  // navigate back to cart
   function backToCart() {
     nav('/cart')
   }
@@ -167,7 +175,7 @@ const Checkout = ({address, setAddress, cartId}) => {
                 <option value="VIC">VIC</option>
                 <option value="NSW">NSW</option>
                 <option value="WA">WA</option>
-                <option value="SAA">SA</option>
+                <option value="SA">SA</option>
                 <option value="ACT">ACT</option>
                 <option value="TAS">TAS</option>
                 <option value="NT">NT</option>

@@ -7,11 +7,16 @@ const Cart = ({cart, setCart, cartId}) => {
   const nav = useNavigate()
   const [total, setTotal] = useState(0)
 
+  // fetch cart data from db with the cartId saved in local storage
   useEffect(() => {
     async function fetchCart() {
       const res = await fetch(`http://localhost:4001/carts/${cartId}`)
       const data = await res.json()
+      if (!data.items) {
+        setCart([])
+      } else {
       setCart(data.items)
+      }
     }
     fetchCart()
   }, [])
@@ -27,6 +32,7 @@ const Cart = ({cart, setCart, cartId}) => {
     })
     const payable = subtotals.reduce((partialSum, additional) => partialSum + additional, 0)
 
+    // if total is NaN due to invalid quantity input from user, display "--" as placeholder for total payable
     if (total !== "--") {
     setTotal(payable)
     } else {
@@ -34,12 +40,14 @@ const Cart = ({cart, setCart, cartId}) => {
     }
   }, [cart])
 
+  // navigate to checkout if input is valid
   function toCheckout() {
     if (!isNaN(total)) {
       nav('/checkout')
     }
   }
 
+  // navigate to home page if input is valid
   function toShopping() {
     if (!isNaN(total)) {
     nav('/')

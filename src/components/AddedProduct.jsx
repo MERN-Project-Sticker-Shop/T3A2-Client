@@ -6,6 +6,7 @@ const AddedProduct = ({item, setCart, setTotal, cartId}) => {
   const [quantity, setQuantity] = useState(item.quantity)
   const [error, setError] = useState()
 
+  // validate user input for cart item quantity
   const checkValidation = () => {
     setError(null)
     const cond = "^[0-9]*$"
@@ -39,6 +40,7 @@ const AddedProduct = ({item, setCart, setTotal, cartId}) => {
 
   }, [quantity])
 
+  // for invalid quantity input, set both quantity and total payable to be "--"
   function handleInputQuantity(event) {
     const inputData = event.target.value.trim()
     if (isNaN(inputData) || !inputData || inputData === "0") {
@@ -50,8 +52,8 @@ const AddedProduct = ({item, setCart, setTotal, cartId}) => {
     }
   }
   
+  // delete product when the trash icon is clicked and update cart
   async function deleteProduct() {
-
     const savedItem = await fetch(`http://localhost:4001/carts/${cartId}/${item.product}`, {
       method: "DELETE",
       headers: {
