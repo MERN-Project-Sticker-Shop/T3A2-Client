@@ -6,10 +6,6 @@ const Cart = ({cart, setCart, addCartToOrder, setTotal, cartId, setCartId}) => {
 
   const nav = useNavigate()
 
-  // function setTheCart(data) {
-  //   setCart(data)
-  // }
-
   useEffect(() => {
     setCartId(localStorage.getItem('cartId'))
   }, [])
