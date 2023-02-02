@@ -47,25 +47,11 @@ import Confirmation from './Confirmation'
 //             "https://plus.unsplash.com/premium_photo-1661591302882-4fe3ee5c81da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzF8fHJpYmJvbnMlMjBhbmQlMjBoZWFydHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"]}
 // ]
 
-const newAddress = {
-  email: "",
-  confirmEmail: "",
-  phone: "",
-  firstname: "",
-  lastname: "",
-  address: "",
-  address2: "",
-  suburb: "",
-  state: "",
-  postcode: ""
-}
-
 const App = () => {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([])
   const [cartId, setCartId] = useState(localStorage.getItem('cartId'))
   const [cart_count, setCart_Count] = useState(0)
-  const [address, setAddress] = useState(newAddress)
 
   // search for the to be added product in cart, if it is already added, change quantity, else add it to cart
   async function addProductToCart(product) {
@@ -125,7 +111,7 @@ const App = () => {
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
         <Route path='/order-history' element={<OrderHistory/>} />
         <Route path='/cart' element={<Cart cart={cart} setCart={setCart} cartId={cartId}/> } />
-        <Route path='/checkout' element={<Checkout address={address} setAddress={setAddress} cartId={cartId}/>}/>
+        <Route path='/checkout' element={<Checkout cartId={cartId}/>}/>
         <Route path='/confirmation' element={<Confirmation setCart={setCart}/>}/>
         <Route path='*' element={<h3>Page Not Found!</h3>} />
       </Routes>
