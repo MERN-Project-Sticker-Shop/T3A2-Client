@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import Summary from './Summary'
 
-const Checkout = ({address, setAddress, addOrderToOrders, cartId}) => {
+const Checkout = ({address, setAddress, cartId}) => {
 
   const [readyCart, setReadyCart] = useState([])
   const [finalTotal, setFinalTotal] = useState()

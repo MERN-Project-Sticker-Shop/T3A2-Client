@@ -2,16 +2,22 @@ import React, { useEffect } from 'react'
 
 const Confirmation = ({setCart, cartId}) => {
 
-    async function resetCart() {
-      setCart([])
-
-        // delete cart
-        // delete local storage
-    }
-
-    useEffect(() => resetCart(), [])
-
-    
+    useEffect(() => {
+      async function resetCart() {
+        setCart([])
+        const res = await fetch(`http://localhost:4001/carts/${cartId}`, {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        })
+        const data = await res.json()
+        console.log(data)
+        localStorage.removeItem('cartId')
+      }
+      resetCart()
+    }, [])
 
   return (
     <>

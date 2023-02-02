@@ -75,9 +75,9 @@ const App = () => {
   const [cart, setCart] = useState([])
   const [cartId, setCartId] = useState(localStorage.getItem('cartId'))
   const [cart_count, setCart_Count] = useState(0)
-  const [order, setOrder] = useState(newOrder)
+  // const [order, setOrder] = useState(newOrder)
   const [address, setAddress] = useState(newAddress)
-  const [orders, setOrders] = useState([])
+  // const [orders, setOrders] = useState([])
   // const [total, setTotal] = useState(0)
 
   async function addProductToCart(product) {
@@ -121,9 +121,9 @@ const App = () => {
   //   setOrder({...order, total: total})
   // }
 
-  function addOrderToOrders(order) {
-    setOrders([...orders, order])
-  }
+  // function addOrderToOrders(order) {
+  //   setOrders([...orders, order])
+  // }
 
   const ProductWrapper = () => {
     const { id } = useParams()
@@ -150,8 +150,8 @@ const App = () => {
         <Route path='/product-detail/:id' element={<ProductWrapper/>}/>
         <Route path='/order-history' element={<OrderHistory/>} />
         <Route path='/cart' element={<Cart cart={cart} setCart={setCart} cartId={cartId}/> } />
-        <Route path='/checkout' element={<Checkout address={address} setAddress={setAddress} cartId={cartId} addOrderToOrders={addOrderToOrders}/>}/>
-        <Route path='/confirmation' element={<Confirmation setCart={setCart} orders={orders} setAddress={setAddress} newAddress={newAddress}/>}/>
+        <Route path='/checkout' element={<Checkout address={address} setAddress={setAddress} cartId={cartId}/>}/>
+        <Route path='/confirmation' element={<Confirmation setCart={setCart} cartId={cartId}/>}/>
         <Route path='*' element={<h3>Page Not Found!</h3>} />
       </Routes>
       <Contact />
