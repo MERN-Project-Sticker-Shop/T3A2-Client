@@ -2,22 +2,40 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AddedProduct from './AddedProduct'
 
-const Cart = ({cart, setCart, addCartToOrder, setTotal}) => {
+const Cart = ({cart, setCart, addCartToOrder, setTotal, cartId, setCartId}) => {
 
   const nav = useNavigate()
+
+  // function setTheCart(data) {
+  //   setCart(data)
+  // }
+
+  useEffect(() => {
+    setCartId(localStorage.getItem('cartId'))
+  }, [])
+
+  useEffect(() => {
+    async function fetchCart() {
+      const res = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}`)
+      const data = await res.json()
+      setCart(data.items)
+    }
+    fetchCart()
+  }, [cartId])
   
   // get an array of all the subtotals
   const subtotals = []
-  cart.forEach(item => {
-    const subtotal = item.price * item.quantity
-    subtotals.push(subtotal)
-  })
 
   // sum all the subtotals for the total payable
   const payable = subtotals.reduce((partialSum, additional) => partialSum + additional, 0)
 
   // When cart is updated, update the total payable
   useEffect(() => {
+    console.log(cart)
+    cart.forEach(item => {
+      const subtotal = item.price * item.quantity
+      subtotals.push(subtotal)
+    })
     setTotal(payable)
   }, [cart])
 

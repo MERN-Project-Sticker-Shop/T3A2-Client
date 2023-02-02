@@ -12,8 +12,11 @@ const Product = ({product, addProductToCart, cartId, setCartId}) => {
       quantity: 1
     }
   
-    console.log(cartId)
+    // console.log(cartId)
 
+    const lsCartId = localStorage.getItem('cartId')
+    setCartId(lsCartId)
+    
     const savedItem = await fetch(`https://t3a2-server-production.up.railway.app/carts/${cartId}/${cartItem.product}`, {
       method: "POST",
       headers: {
@@ -27,6 +30,10 @@ const Product = ({product, addProductToCart, cartId, setCartId}) => {
     const newItem = dbCartItems.find(item => item.product === cartItem.product)
 
     setCartId(data._id)
+
+    localStorage.setItem('cartId', data._id)
+    console.log(localStorage.getItem('cartId'))
+
     addProductToCart(newItem)
   }
   
