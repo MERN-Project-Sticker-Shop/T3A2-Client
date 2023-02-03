@@ -2,6 +2,10 @@ import React from 'react'
 import Album from './Album'
 import { useState } from 'react'
 
+const textStyle = {
+  textAlign:"center",
+  margin: "20px"
+}
 const Home = ({products}) => {
 
   const [search, setSearch] = useState("")
@@ -12,13 +16,14 @@ const Home = ({products}) => {
   return (
     <>
         <div>
-            <div style={{backgroundImage: "url(https://i.postimg.cc/pTwRJtB8/Banner-1.jpg)"}}>
-                <h1>Smoonypaws</h1>
+            <div style={{backgroundImage: "url(https://i.postimg.cc/ryNFfW8Q/Banner-1.jpg)", height:"90px"}}>
+                <h3 style={{position:"relative", zIndex: "-1"}}>Smoonypaws Banner</h3>
             </div>
-            <p id="intro">Cute handmade & Self-designed cat stickers, sharing our four adorable kitties. The designs are inspired by our 4 cats😻: QiQi, PeterPan, Taro and Hana</p>
+            <h5 style={textStyle}>Shop Info</h5>
+            <p id="intro" style={{marginBottom: "30px", textAlign: "center"}}>Cute handmade & Self-designed cat stickers, sharing our four adorable kitties. The designs are inspired by our 4 cats😻: QiQi, PeterPan, Taro and Hana</p>
         </div>
         <div>
-            <h2 id="products">Products</h2>
+            <h2 id="products" style={textStyle}>Products</h2>
             <form role="search" style={{padding: "2rem"}} onSubmit={event => event.preventDefault()}>
                 <input type="search" className="form-control" placeholder="Search..." value={search} onChange={(event) => setSearch(event.target.value.toLowerCase())} />
             </form>
