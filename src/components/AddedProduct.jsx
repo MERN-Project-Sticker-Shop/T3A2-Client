@@ -14,6 +14,9 @@ const AddedProduct = ({item, setCart, setTotal, cartId}) => {
     if(!inputData.match(cond)){
       setError("Quantity can only be a positive integer")
     }
+    if (quantity === 0) {
+      deleteProduct()
+    }
   }
 
   useEffect(() => checkValidation(), [quantity])
@@ -43,8 +46,8 @@ const AddedProduct = ({item, setCart, setTotal, cartId}) => {
   // for invalid quantity input, set both quantity and total payable to be "--"
   function handleInputQuantity(event) {
     const inputData = event.target.value.trim()
-    if (isNaN(inputData) || !inputData || inputData === "0") {
-      setQuantity("*") // or: setQuantity(" ")
+    if (isNaN(inputData) || !inputData || inputData == 0) {
+      setQuantity(" ") // or: setQuantity(" ")
       setTotal("--")
     } else {
       setQuantity(parseInt(inputData))

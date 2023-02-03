@@ -50,7 +50,7 @@ import Confirmation from './Confirmation'
 const App = () => {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([])
-  const [cartId, setCartId] = useState(localStorage.getItem('cartId'))
+  const [cartId, setCartId] = useState(sessionStorage.getItem('cartId'))
   const [cart_count, setCart_Count] = useState(0)
 
   // search for the to be added product in cart, if it is already added, change quantity, else add it to cart

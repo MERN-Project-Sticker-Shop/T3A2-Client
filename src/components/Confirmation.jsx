@@ -5,7 +5,7 @@ const Confirmation = ({setCart}) => {
   // clear the local cart and remove cart id stored in local storage
     useEffect(() => {
       setCart([])
-      localStorage.removeItem('cartId')
+      sessionStorage.removeItem('cartId')
     }, [])
 
   return (
