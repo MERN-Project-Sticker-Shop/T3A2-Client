@@ -1,5 +1,7 @@
 import React from 'react'
+import MediaQuery from 'react-responsive'
 import Carousel from './Carousel'
+
 
 const Product = ({product, addProductToCart, cartId, setCartId}) => {
 
@@ -34,13 +36,30 @@ const Product = ({product, addProductToCart, cartId, setCartId}) => {
   
   return (
     <>
-        <div style={{width: "75vw"}} className="container">
+    <MediaQuery maxDeviceWidth={1224}>
+        <div style={{width: "50vw"}} className="container">
             <Carousel imageLinks={product.imageLinks}/>
         </div>
-        <h2 className="product-detail-name">{product.name}</h2>
-        <h3 className="product-detail-price">Price: $ {product.price}</h3>
-        <p className="detail-description">{product.description}</p>
-        <button id="add-product"onClick={addProduct} type="button" className="btn btn-primary">Add to Cart</button>
+        <div style={{margin:"20px"}}>
+          <h2 className="product-detail-name" style={{fontSize: "6vw"}}>{product.name}</h2>
+          <h3 className="product-detail-price" style={{fontSize:"4.5vw"}}>Price: $ {product.price}</h3>
+          <p className="detail-description" style={{fontSize:"3vw"}}>{product.description}</p>
+          <button id="add-product"onClick={addProduct} type="button" className="btn btn-primary">Add to Cart</button>
+        </div>
+    </MediaQuery>
+    <MediaQuery minDeviceWidth={1224}>
+      <div style={{display: "flex", flexDirection:"row"}}>
+        <div style={{width: "35vw"}} className="container">
+            <Carousel imageLinks={product.imageLinks}/>
+        </div>
+        <div style={{width:'45vw', marginRight:'50px'}}>
+          <h2 className="product-detail-name" style={{fontSize: "4vw"}}>{product.name}</h2>
+          <h3 className="product-detail-price" style={{fontSize:"3vw"}}>Price: $ {product.price}</h3>
+          <p className="detail-description" style={{fontSize:"2vw"}}>{product.description}</p>
+          <button id="add-product"onClick={addProduct} type="button" className="btn btn-primary">Add to Cart</button>
+        </div>
+      </div>
+    </MediaQuery>
     </>
   )
 }
