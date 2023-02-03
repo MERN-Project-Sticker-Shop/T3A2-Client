@@ -122,8 +122,8 @@ const Checkout = ({ cartId }) => {
             </div>
 
             <div className="col-6">
-              <label htmlFor="confirm-email" className="form-label">Confirm Email</label>
-              <input type="email" className="form-control" id="confirm-email" placeholder="you@example.com" defaultValue="" {...register("confirmEmail", { 
+              <label htmlFor="confirmEmail" className="form-label">Confirm Email</label>
+              <input type="email" className="form-control" id="confirmEmail" placeholder="you@example.com" defaultValue="" {...register("confirmEmail", { 
                 validate: (value) => value === watch('email')
                 })}/>
               {errors.confirmEmail && <p className="alert alert-danger">Input doesn't match email address</p>}

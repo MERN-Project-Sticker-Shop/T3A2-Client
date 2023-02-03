@@ -4,24 +4,43 @@ import  userEvent  from "@testing-library/user-event"
 import { BrowserRouter } from "react-router-dom"
 import Checkout from "../src/components/Checkout"
 
-const order = {cart: [{}, {}, {}]}
-const total = 123
-const address = {}
-const setAddress = vi.fn()
-const addAddressToOrder = vi.fn()
-const addTotalToOrder = vi.fn()
-const addOrderToOrders = vi.fn()
+const cartId = "asdf2adfe5344f"
+
+const readyCart = [
+    {
+        product: "product1",
+        price: 5,
+        quantity: 2,
+        imageLink: "http://asdfase.com"
+    },
+    {
+        product: "product2",
+        price: 5.5,
+        quantity: 1,
+        imageLink: "http://asdfase.com"
+    }
+]
+
+// const fakeCart = {
+//     _id: cartId,
+//     items: readyCart,
+//     __v: 0
+// }
+
+// global.fetch = vi.fn(() => Promise.resolve({
+//     json: () => Promise.resolve([fakeCart])
+// }))
 
 // Unit test for the Checkout Component: test that the input validation works
 describe('Checkout Component', () => {
     let container
 
     beforeEach(function() {
-        container = render(<BrowserRouter><Checkout address={address} setAddress={setAddress} addAddressToOrder={addAddressToOrder} total={total} addTotalToOrder={addTotalToOrder} order={order} addOrderToOrders={addOrderToOrders}/></BrowserRouter>).container
+        container = render(<BrowserRouter><Checkout readyCart={readyCart} cartId={cartId}/></BrowserRouter>).container
     })
-    it('Should render all the fields', () => {
+    it('Should render all the fields for address', () => {
         expect(container.querySelector('#email')).toBeInTheDocument()
-        expect(container.querySelector('#confirm-email')).toBeInTheDocument()
+        expect(container.querySelector('#confirmEmail')).toBeInTheDocument()
         expect(container.querySelector('#firstName')).toBeInTheDocument()
         expect(container.querySelector('#lastName')).toBeInTheDocument()
         expect(container.querySelector('#phone')).toBeInTheDocument()
@@ -34,7 +53,7 @@ describe('Checkout Component', () => {
     it('Should validate form fields and render an error message', async () => {
         await userEvent.type(container.querySelector('#email'), "Lorem ipsum dolor sit amet,")
 
-        await userEvent.type(container.querySelector('#confirm-email'), "asdfawerasdf,")
+        await userEvent.type(container.querySelector('#confirmEmail'), "asdfawerasdf,")
         
         await userEvent.type(container.querySelector('#firstName'), "L,")
 
@@ -55,12 +74,11 @@ describe('Checkout Component', () => {
         await userEvent.click(container.querySelector('#submit'))
 
         expect(await container.querySelectorAll('p')).toHaveLength(10)
-        expect(addOrderToOrders).not.toHaveBeenCalled()
     })
     it('should submit correct form data', async () => {
         await userEvent.type(container.querySelector('#email'), "email@gmail.com")
 
-        await userEvent.type(container.querySelector('#confirm-email'), "email@gmail.com")
+        await userEvent.type(container.querySelector('#confirmEmail'), "email@gmail.com")
         
         await userEvent.type(container.querySelector('#firstName'), "Jane")
 
@@ -79,7 +97,6 @@ describe('Checkout Component', () => {
         await userEvent.type(container.querySelector('#postcode'), "3000")
 
         await userEvent.click(container.querySelector('#submit'))
-
-        expect(addOrderToOrders).toHaveBeenCalled()
+        expect(await container.querySelectorAll('p')).not.toBeInTheDocument()
     })
 })
