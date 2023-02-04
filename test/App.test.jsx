@@ -32,9 +32,15 @@ const fakeProducts = [
     }
 ]
 
-global.fetch = vi.fn(() => Promise.resolve({
-    json: () => Promise.resolve(fakeProducts)
-}))
+// global.fetch = vi.fn(() => Promise.resolve({
+//     json: () => Promise.resolve(fakeProducts)
+// }))
+// global.fetch = vi.fn()
+
+function createFetchResponse (data) {
+    return {json: () => new Promise((resolve) => resolve(data))}
+}
+
 
 // Integration Test: Users can view a list of product in Home page and view product details in Detail page for each product
 describe('View products', () => {
@@ -42,8 +48,9 @@ describe('View products', () => {
     let container
 
     beforeEach(async function() {
-        // container = document.createElement("div")
-        // document.body.appendChild(container)
+        // fetch.mockResolvedValue(createFetchResponse(fakeProducts))
+        container = document.createElement("div")
+        document.body.appendChild(container)
 
         // await act(async () => {
         //     render(<BrowserRouter><App /></BrowserRouter>, container)
@@ -51,11 +58,11 @@ describe('View products', () => {
         container = render(<BrowserRouter><App /></BrowserRouter>).container
     })
 
-    // afterEach(() => {
-    //     unmountComponentAtNode(container)
-    //     container.remove()
-    //     container = null
-    // })
+    afterEach(() => {
+        unmountComponentAtNode(container)
+        container.remove()
+        container = null
+    })
 
     // In Home Page:
     it('Shows the Sticker Shop Brand heading', () => {
@@ -76,6 +83,11 @@ describe('View products', () => {
         //     Promise.resolve({
         //         json: () => Promise.resolve(fakeProducts)
         //     }))
+
+        // fetch.mockResolvedValue(createFetchResponse(fakeProducts))
+        // await act(async () => {
+        //     render()
+        // })
 
         const images = container.querySelectorAll('.card-img-top')
         const names = container.querySelectorAll('.product-name')
