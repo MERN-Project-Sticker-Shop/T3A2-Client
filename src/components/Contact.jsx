@@ -7,8 +7,8 @@ import FB from '../assets/facebook.svg'
 const Contact = () => {
   return (
 <>
-<div className="container">
-  <footer className="py-3 my-4">
+<div className="container" >
+  <footer className="py-3 my-5">
     <h3 className="text-center text-muted mb-4">Contact Us</h3>
     <ul className="nav justify-content-center pb-3 mb-2">
       <li className="ms-3"><span className="text-center text-muted"><img src={Email} className="bi" width="24" height="24"></img> smoonypaws@gmail.com</span></li>

@@ -5,7 +5,7 @@ import { useState } from 'react'
 const textStyle = {
   textAlign:"center",
   margin: "20px",
-  fontSize:"3vw"
+  fontSize:"2vw"
 }
 const Home = ({products}) => {
 
@@ -21,7 +21,7 @@ const Home = ({products}) => {
                 <h3 style={{position:"relative", zIndex: "-1"}}>Smoonypaws Banner</h3>
             </div>
             <h5 style={textStyle}>Shop Info</h5>
-            <p id="intro" style={{marginBottom: "30px", textAlign: "center"}}>Cute handmade & Self-designed cat stickers, sharing our four adorable kitties. The designs are inspired by our 4 cats😻: QiQi, PeterPan, Taro and Hana</p>
+            <p id="intro" style={{margin: "0 0 30px 20px", fontSize:"1.5vw"}}>Cute handmade & Self-designed cat stickers, sharing our four adorable kitties. The designs are inspired by our 4 cats😻: QiQi, PeterPan, Taro and Hana</p>
         </div>
         <div>
             <h2 id="products" style={textStyle}>Products</h2>
