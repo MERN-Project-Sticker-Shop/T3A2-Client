@@ -15,7 +15,7 @@ const Navbar = ({cart_count}) => {
         <li className="nav-item"><Link to="/" className="nav-link" aria-current="page">Home</Link></li>
         <li className="nav-item"><HashLink to="/#products" className="nav-link" id="to-products">Products</HashLink></li>
         <li className="nav-item"><Link to="/order-history" className="nav-link">Order History</Link></li>
-        { cart_count > 0 ? <li className="nav-item"><Link to="/cart" className="nav-link" id="to-cart"> Cart<div className="badge badge-pill bg-warning" id="cart-notification">{cart_count}</div></Link></li> : <li className="nav-item"><Link to="/cart" className="nav-link" id="to-cart"> Cart</Link></li> }
+        { cart_count > 0 ? <li className="nav-item"><Link to="/cart" className="nav-link" id="to-cart"> Cart<div className="badge badge-pill bg-warning" data-testid="cart-notification">{cart_count}</div></Link></li> : <li className="nav-item"><Link to="/cart" className="nav-link" id="to-cart"> Cart</Link></li> }
       </ul>
     </header>
   </div>
