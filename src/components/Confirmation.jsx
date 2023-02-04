@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 const paragraphStyling = {
-  fontSize: "2vw",
+  fontSize: "1rem",
   marginBottom: "60px",
   paddingLeft:'10px'
 }
