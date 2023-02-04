@@ -57,7 +57,7 @@ const Cart = ({cart, setCart, cartId}) => {
   
   return (
     <>
-    <MediaQuery maxDeviceWidth={1200}>
+    <MediaQuery maxWidth={1200}>
       <h2 style={{textAlign:"center"}}>Cart</h2>
       <div className="container py-5 bg-light">
         {cart.map(item => <div className="card rounded-3 mb-4" key={item.product}><AddedProduct item={item} setCart={setCart} setTotal={setTotal} cartId={cartId}/></div>)}
@@ -69,7 +69,7 @@ const Cart = ({cart, setCart, cartId}) => {
         </div>
       </div>
     </MediaQuery>
-    <MediaQuery minDeviceWidth={1200}>
+    <MediaQuery minWidth={1200}>
       <h2 style={{textAlign:"center"}}>Cart</h2>
       <div className="container py-5 bg-light" style={{display:"flex", flexDirection:"row"}}>
         <div >
