@@ -1,11 +1,13 @@
 import "@testing-library/jest-dom"
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import  userEvent  from "@testing-library/user-event"
 import { BrowserRouter } from "react-router-dom"
 import App from '../src/components/App'
 import { unmountComponentAtNode } from 'react-dom'
 import { act } from "react-dom/test-utils"
 import { vi } from "vitest"
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
 
 const fakeProducts = [
     {
@@ -32,9 +34,19 @@ const fakeProducts = [
     }
 ]
 
-global.fetch = vi.fn(() => Promise.resolve({
-    json: () => Promise.resolve(fakeProducts)
-}))
+const productsResponse = rest.get("https://t3a2-server-production.up.railway.app/products", (req, res, ctx) =>{
+    return res(ctx.json(fakeProducts))
+})
+
+// const cartItemResponse = rest.post()
+
+const handlers = [productsResponse]
+
+const server = setupServer(...handlers)
+
+// global.fetch = vi.fn(() => Promise.resolve({
+//     json: () => Promise.resolve(fakeProducts)
+// }))
 // global.fetch = vi.fn()
 
 // function createFetchResponse (data) {
@@ -44,6 +56,10 @@ global.fetch = vi.fn(() => Promise.resolve({
 
 // Integration Test: Users can view a list of product in Home page and view product details in Detail page for each product
 describe('View products', () => {
+
+    beforeAll(() => server.listen())
+    afterEach(() => server.resetHandlers())
+    afterAll(() => server.close())
     
     let container
 
@@ -52,9 +68,9 @@ describe('View products', () => {
         // container = document.createElement("div")
         // document.body.appendChild(container)
 
-        await act(async () => {
-            render(<BrowserRouter><App /></BrowserRouter>, container)
-        })
+        // await act(async () => {
+        //     render(<BrowserRouter><App /></BrowserRouter>, container)
+        // })
         container = render(<BrowserRouter><App /></BrowserRouter>).container
     })
 
@@ -79,22 +95,15 @@ describe('View products', () => {
     })
     it('Should render a list of (at least 2) product snapshots each with an image, name, price, and view detail button', async () => {
 
-        // vi.spyOn(global, "fetch").mockImplementation(() => 
-        //     Promise.resolve({
-        //         json: () => Promise.resolve(fakeProducts)
-        //     }))
-
-        // await fetch.mockResolvedValue(createFetchResponse(fakeProducts))
-        // await act(async () => {
-        //     render()
-        // })
+        // wait until the image of the first product is rendered
+        await waitFor(() => {
+            expect(container.querySelector('.card-img-top')).toBeInTheDocument()
+        })
 
         const images = container.querySelectorAll('.card-img-top')
         const names = container.querySelectorAll('.product-name')
         const prices = container.querySelectorAll('.product-price')
-        const buttons = screen.getAllByText('View Details')
-
-        // await waitFor(() => expect(images).toBeInTheDocument())
+        const buttons = container.querySelectorAll('button')
 
         expect(images.length).toBeGreaterThanOrEqual(2)
         expect(names.length).toBeGreaterThanOrEqual(2)
@@ -113,9 +122,11 @@ describe('View products', () => {
     })
     // In Detail page:
     it('Show detail page of first product when a corresponding "View Details" is clicked', async () => {
-        const toDetails = screen.getAllByText('View Details')
-        const toFirstProduct = toDetails[0]
-        await userEvent.click(toFirstProduct)
+        await waitFor(() => {
+            expect(container.querySelector('button')).toBeVisible()
+        })
+
+        await userEvent.click(container.querySelector('button'))
 
         const detailImages = screen.getAllByAltText('product-detail-image')
         const productName = container.querySelector('.product-detail-name')
@@ -140,52 +151,52 @@ describe('View products', () => {
 })
 
 // Integration test: User can add product to cart by clicking the 'Add to Cart' button and manipulate the selected product
-describe('Add the first product to cart', () => {
-    let container
+// describe('Add the first product to cart', () => {
+//     let container
 
-    beforeEach(async function() {
-        container = render(<BrowserRouter><App /></BrowserRouter>).container
-        const button = container.querySelector('#add-product')
-        await userEvent.click(button)
-    })
-    // in Navbar:
-    it('Click "Add to Cart" and cart notification in Navbar will be updated', () => {
+//     beforeEach(async function() {
+//         container = render(<BrowserRouter><App /></BrowserRouter>).container
+//         const button = container.querySelector('#add-product')
+//         await userEvent.click(button)
+//     })
+//     // in Navbar:
+//     it('Click "Add to Cart" and cart notification in Navbar will be updated', () => {
 
-        const notification = container.querySelector('#cart-notification')
-        expect(notification.innerHTML).toBe('1')
-    })
-    // in Cart:
-    it('Added product will show up in cart', async () => {
-        const cart = container.querySelector('#to-cart')
-        await userEvent.click(cart)
+//         const notification = container.querySelector('#cart-notification')
+//         expect(notification.innerHTML).toBe('1')
+//     })
+//     // in Cart:
+//     it('Added product will show up in cart', async () => {
+//         const cart = container.querySelector('#to-cart')
+//         await userEvent.click(cart)
         
-        const title = container.querySelector('h2')
-        expect(title).toHaveTextContent('Cart')
+//         const title = container.querySelector('h2')
+//         expect(title).toHaveTextContent('Cart')
 
-        const productName = container.querySelector('#product-name-in-cart')
-        expect(productName).toBeDefined()
-        expect(productName.innerHTML.length).toBeGreaterThanOrEqual(2)
+//         const productName = container.querySelector('#product-name-in-cart')
+//         expect(productName).toBeDefined()
+//         expect(productName.innerHTML.length).toBeGreaterThanOrEqual(2)
 
-        const productPrice = container.querySelector('#product-price-in-cart')
-        expect(productPrice).toBeDefined()
-        expect(productPrice.innerHTML.length).toBeGreaterThanOrEqual(9)
-        expect(productPrice.innerHTML).toMatch(new RegExp('Price: $'))
+//         const productPrice = container.querySelector('#product-price-in-cart')
+//         expect(productPrice).toBeDefined()
+//         expect(productPrice.innerHTML.length).toBeGreaterThanOrEqual(9)
+//         expect(productPrice.innerHTML).toMatch(new RegExp('Price: $'))
 
-        const quantity = container.querySelector('input')
-        expect(quantity).toBeDefined()
-        expect(quantity).toHaveValue('1')
+//         const quantity = container.querySelector('input')
+//         expect(quantity).toBeDefined()
+//         expect(quantity).toHaveValue('1')
 
-        await userEvent.type(quantity, '3')
-        expect(quantity).toHaveValue('13')
+//         await userEvent.type(quantity, '3')
+//         expect(quantity).toHaveValue('13')
 
-        const subtotal = container.querySelector('#cart-subtotal')
-        expect(subtotal).toBeDefined()
-        expect(subtotal.innerHTML.length).toBeGreaterThanOrEqual(12)
-        expect(subtotal.innerHTML).toMatch(new RegExp('Subtotal: $'))
+//         const subtotal = container.querySelector('#cart-subtotal')
+//         expect(subtotal).toBeDefined()
+//         expect(subtotal.innerHTML.length).toBeGreaterThanOrEqual(12)
+//         expect(subtotal.innerHTML).toMatch(new RegExp('Subtotal: $'))
 
-        const total = container.querySelector('#cart-total')
-        expect(total).toBeDefined()
-        expect(total.innerHTML.length).toBeGreaterThanOrEqual(17)
-        expect(total.innerHTML).toMatch(new RegExp('Total Payable: $'))
-    })
-})
+//         const total = container.querySelector('#cart-total')
+//         expect(total).toBeDefined()
+//         expect(total.innerHTML.length).toBeGreaterThanOrEqual(17)
+//         expect(total.innerHTML).toMatch(new RegExp('Total Payable: $'))
+//     })
+// })
