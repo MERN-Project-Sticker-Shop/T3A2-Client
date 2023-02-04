@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import Summary from './Summary'
 
+const textStyle = {
+  textAlign:"center",
+}
 const newAddress = {
   email: "",
   confirmEmail: "",
@@ -103,10 +106,10 @@ const Checkout = ({ cartId }) => {
 
   return (
     <>
-      <h2>Checkout Form</h2>
+      <h2 style={textStyle}>Checkout Form</h2>
       <div className="container py-5 bg-light">
         <div className="col-md-12 col-lg-12">
-        <h4 className="mb-3">Billing address</h4>
+        <h4 className="mb-3" style={textStyle}>Billing address</h4>
         <form onSubmit={handleSubmit(toConfirmation)} noValidate>
           <div className="row g-3">
           <div className="col-6">
@@ -210,14 +213,14 @@ const Checkout = ({ cartId }) => {
           </div>
           <hr className="my-4"/>
 
-          <h4 className="mb-3">Summary</h4>
+          <h4 className="mb-3" style={textStyle}>Summary</h4>
           <div className="row mb-3 text-center">
             <div className="col-4 themed-grid-col "><h5>Product</h5></div>
             <div className="col-4 themed-grid-col"><h5>Quantity</h5></div>
             <div className="col-4 themed-grid-col"><h5>Subtotal</h5></div>
           </div>
 
-          {readyCart.map(item => <div key={item.product} className="row mb-3 text-center"><Summary item={item}/></div>)}
+          {readyCart.map(item => <div key={item.product} className="row mb-3 text-center" ><Summary item={item}/></div>)}
 
           <hr className="my-4"/>
           <h4 className="mb-3">Total Payable: ${finalTotal}</h4>

@@ -36,7 +36,7 @@ const Product = ({product, addProductToCart, cartId, setCartId}) => {
   
   return (
     <>
-    <MediaQuery maxDeviceWidth={1224}>
+    <MediaQuery maxDeviceWidth={1200}>
         <div style={{width: "50vw"}} className="container">
             <Carousel imageLinks={product.imageLinks}/>
         </div>
@@ -47,7 +47,7 @@ const Product = ({product, addProductToCart, cartId, setCartId}) => {
           <button id="add-product"onClick={addProduct} type="button" className="btn btn-primary">Add to Cart</button>
         </div>
     </MediaQuery>
-    <MediaQuery minDeviceWidth={1224}>
+    <MediaQuery minDeviceWidth={1200}>
       <div style={{display: "flex", flexDirection:"row"}}>
         <div style={{width: "35vw"}} className="container">
             <Carousel imageLinks={product.imageLinks}/>

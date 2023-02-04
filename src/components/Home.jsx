@@ -4,7 +4,8 @@ import { useState } from 'react'
 
 const textStyle = {
   textAlign:"center",
-  margin: "20px"
+  margin: "20px",
+  fontSize:"3vw"
 }
 const Home = ({products}) => {
 
