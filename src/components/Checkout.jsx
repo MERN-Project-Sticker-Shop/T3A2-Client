@@ -154,7 +154,8 @@ const Checkout = ({ cartId }) => {
               <input type="text" className="form-control" id="phone" {...register("phone", { 
                 required: true, 
                 pattern: /^[0-9]*$/i,
-                minLength: 10
+                minLength: 10,
+                maxLength:10
                 })}/>
               {errors.phone && <p className="alert alert-info">Invalid phone number</p>}
             </div>
