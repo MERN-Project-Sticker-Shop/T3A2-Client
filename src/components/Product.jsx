@@ -41,9 +41,9 @@ const Product = ({product, addProductToCart, cartId, setCartId}) => {
             <Carousel imageLinks={product.imageLinks}/>
         </div>
         <div style={{margin:"20px"}}>
-          <h2 className="product-detail-name" style={{fontSize: "5vw"}}>{product.name}</h2>
-          <h3 className="product-detail-price" style={{fontSize:"4vw"}}>Price: $ {product.price}</h3>
-          <p className="detail-description" style={{fontSize:"2.5vw"}}>{product.description}</p>
+          <h2 className="product-detail-name" style={{fontSize: "4vw"}}>{product.name}</h2>
+          <h3 className="product-detail-price" style={{fontSize:"3vw"}}>Price: $ {product.price}</h3>
+          <p className="detail-description" style={{fontSize:"2vw"}}>{product.description}</p>
           <button id="add-product"onClick={addProduct} type="button" className="btn btn-primary">Add to Cart</button>
         </div>
     </MediaQuery>
