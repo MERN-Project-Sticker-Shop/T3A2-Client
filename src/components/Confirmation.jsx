@@ -7,7 +7,8 @@ const paragraphStyling = {
 }
 
 const heading4Styling = {
-  paddingLeft:'10px'
+  paddingLeft:'10px',
+  fontWeight:'bold'
 }
 
 const Confirmation = ({setCart}) => {
@@ -20,7 +21,7 @@ const Confirmation = ({setCart}) => {
 
   return (
     <>
-        <h2 style={{marginBottom:"30px", paddingLeft:'10px'}}>Your order was received!</h2>
+        <h2 style={{marginBottom:"30px", paddingLeft:'10px', fontWeight:"bold"}}>Your order was received!</h2>
         <h4 style={heading4Styling}>Current Processing Time</h4>
         <p style={paragraphStyling}>Products will be shipped within 2-3 business days upon receiving your order. </p>
         <h4 style={heading4Styling}>Shipping Information</h4>
