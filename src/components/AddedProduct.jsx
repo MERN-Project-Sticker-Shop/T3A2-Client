@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Trash from '../assets/trash3.svg'
 
+
 const AddedProduct = ({item, setCart, setTotal, cartId}) => {
 
   const [quantity, setQuantity] = useState(item.quantity)
@@ -82,17 +83,17 @@ const AddedProduct = ({item, setCart, setTotal, cartId}) => {
                   src={item.imageLink}
                   className="img-fluid rounded-3" alt="Product-image"/>
               </div>
-              <div className="col-md-3 col-lg-3 col-xl-3">
+              <div className="col-md-3 col-lg-3 col-xl-2">
                 <p className="lead fw-normal mb-2" id="product-name-in-cart">{item.product}</p>
                 <p id="product-price-in-cart"><span className="text-muted">Price: </span>$ {item.price} </p>
               </div>
-              <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
+              <div className="col-md-3 col-lg-3 col-xl-3">
 
                 <input typ="number" min="1"  value={quantity} onChange={handleInputQuantity} className="form-control" />
                 {error && <div id="alert" className="alert alert-info" role="alert">{error}</div>}
 
               </div>
-              <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+              <div className="col-md-3 col-lg-2 col-xl-3 offset-lg-1">
                 <h5 id="cart-subtotal" className="mt-3">Subtotal: ${isNaN(quantity) ? "--" : item.price * quantity}</h5>
               </div>
               <div className="col-md-1 col-lg-1 col-xl-1 text-end">

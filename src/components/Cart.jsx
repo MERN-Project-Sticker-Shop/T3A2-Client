@@ -57,7 +57,7 @@ const Cart = ({cart, setCart, cartId}) => {
   
   return (
     <>
-    <MediaQuery maxDeviceWidth={1140}>
+    <MediaQuery maxDeviceWidth={1200}>
       <h2 style={{textAlign:"center"}}>Cart</h2>
       <div className="container py-5 bg-light">
         {cart.map(item => <div className="card rounded-3 mb-4" key={item.product}><AddedProduct item={item} setCart={setCart} setTotal={setTotal} cartId={cartId}/></div>)}
@@ -69,7 +69,7 @@ const Cart = ({cart, setCart, cartId}) => {
         </div>
       </div>
     </MediaQuery>
-    <MediaQuery minDeviceWidth={1140}>
+    <MediaQuery minDeviceWidth={1200}>
       <h2 style={{textAlign:"center"}}>Cart</h2>
       <div className="container py-5 bg-light" style={{display:"flex", flexDirection:"row"}}>
         <div >
@@ -77,7 +77,7 @@ const Cart = ({cart, setCart, cartId}) => {
         </div>
         <div className="card-body p-4">
             <div className="row d-flex justify-content-between align-items-center">
-                {cart.length > 0 ? <><h4 id="cart-total" style={{marginBottom:"40px"}}>Total Payable: ${isNaN(total)? "--" : total}</h4><button onClick={toCheckout} className="btn btn-warning btn-block btn-lg">Checkout</button></> : <h4>Your cart is empty.</h4>}
+                {cart.length > 0 ? <><h4 id="cart-total" style={{marginBottom:"30px"}}>Total Payable: ${isNaN(total)? "--" : total}</h4><button onClick={toCheckout} className="btn btn-warning btn-block btn-lg">Checkout</button></> : <h4>Your cart is empty.</h4>}
                 <button onClick={toShopping} className="btn btn-primary btn-block btn-lg mt-3">Continue Shopping</button>
             </div>           
         </div>
