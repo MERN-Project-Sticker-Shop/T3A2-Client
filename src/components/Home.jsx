@@ -1,12 +1,51 @@
 import React from 'react'
+import { useMediaQuery } from 'react-responsive'
 import Album from './Album'
 import { useState } from 'react'
 
-const textStyle = {
-  textAlign:"center",
-  margin: "20px",
-  fontSize:"2vw"
+
+
+const viewWidth = () => {
+
+  const isTablet = useMediaQuery(
+    { minWidth: 580, maxWidth: 1200}
+  )
+
+  const isDesktop = useMediaQuery(
+    { minWidth: 1200},   
+  )
+
+  const isMobile = useMediaQuery(
+    { minWidth: 800}
+  )
+  const textStyle = {
+    textAlign:"center",
+    margin: "20px",
+    fontSize:"6vw"
+  }
+
+  const paragraphStyle ={
+    margin: "0 25px 30px 30px",
+    fontSize: "4vw"
+  }
+
+  const changeFontSize =() => {
+  if (isDesktop) {
+    textStyle.fontSize = "2vw"
+    paragraphStyle.fontSize = "1.5vw"
+  } else if (isTablet) {
+    paragraphStyle.fontSize = "3vw"
+    textStyle.fontSize = "4vw"
+  } else {
+    textStyle.fontSize = "6vw"
+    paragraphStyle.fontSize = "4vw"
+  }
 }
+  changeFontSize()
+   
+  return { textStyle, paragraphStyle }
+}
+
 const Home = ({products}) => {
 
   const [search, setSearch] = useState("")
@@ -17,14 +56,14 @@ const Home = ({products}) => {
   return (
     <>
         <div>
-            <div style={{backgroundImage: "url(https://i.postimg.cc/ryNFfW8Q/Banner-1.jpg)", height:"270px"}}>
+            <div style={{backgroundImage: "url(https://i.postimg.cc/ryNFfW8Q/Banner-1.jpg)", height:"270px", width:"100vw"}}>
                 <h3 style={{position:"relative", zIndex: "-1"}}>Smoonypaws Banner</h3>
             </div>
-            <h5 style={textStyle}>Shop Info</h5>
-            <p id="intro" style={{margin: "0 25px 30px 30px", fontSize:"1.75vw"}}>Cute handmade & Self-designed cat stickers, sharing our four adorable kitties. The designs are inspired by our 4 cats😻: QiQi, PeterPan, Taro and Hana</p>
+            <h5 style={viewWidth().textStyle}>Shop Info</h5>
+            <p id="intro" style={viewWidth().paragraphStyle}>Cute handmade & Self-designed cat stickers, sharing our four adorable kitties. The designs are inspired by our 4 cats😻: QiQi, PeterPan, Taro and Hana</p>
         </div>
         <div>
-            <h2 id="products" style={textStyle}>Products</h2>
+            <h2 id="products" style={viewWidth().textStyle}>Products</h2>
             <form role="search" style={{padding: "2rem"}} onSubmit={event => event.preventDefault()}>
                 <input type="search" className="form-control" placeholder="Search..." value={search} onChange={(event) => setSearch(event.target.value.toLowerCase())} />
             </form>
@@ -37,7 +76,7 @@ const Home = ({products}) => {
                 </div>
             </div>
         </div>
-    </>
+      </>
   )
 }
 
