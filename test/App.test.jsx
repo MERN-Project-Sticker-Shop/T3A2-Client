@@ -34,10 +34,9 @@ const fakeProducts = [
     }
 ]
 
-global.fetch = vi.fn()
-function createFetchResponse(data) {
-    return {json: () => new Promise((resolve) => resolve(data))}
-}
+global.fetch = vi.fn(() => Promise.resolve({
+    json: () => Promise.resolve(fakeProducts)
+}))
 
 // Integration Test: Users can view a list of product in Home page and view product details in Detail page for each product
 describe('View products', () => {
@@ -63,12 +62,12 @@ describe('View products', () => {
     })
     it('Should render a list of (at least 2) product snapshots each with an image, name, price, and view detail button', async () => {
 
-        fetch.mockResolvedValue(createFetchResponse(fakeProducts))
-
         const images = container.querySelectorAll('.card-img-top')
         const names = container.querySelectorAll('.product-name')
         const prices = container.querySelectorAll('.product-price')
         const buttons = screen.getAllByText('View Details')
+
+        await waitFor(() => expect(images).toBeInTheDocument())
 
         expect(images.length).toBeGreaterThanOrEqual(2)
         expect(names.length).toBeGreaterThanOrEqual(2)

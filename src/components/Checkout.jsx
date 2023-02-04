@@ -114,81 +114,81 @@ const Checkout = ({ cartId }) => {
           <div className="row g-3">
           <div className="col-6">
               <label htmlFor="email" className="form-label">Email</label>
-              <input type="email" className="form-control" id="email" placeholder="you@example.com" defaultValue="" {...register("email", { 
+              <input type="email" className="form-control" data-testid="email" id="email" placeholder="you@example.com" defaultValue="" {...register("email", { 
                 required: true, 
                 pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
                 })}/>
-              {errors.email && <p className="alert alert-info">Invalid email address</p>}
+              {errors.email && <p role="note" className="alert alert-info">Invalid email address</p>}
             </div>
 
             <div className="col-6">
               <label htmlFor="confirmEmail" className="form-label">Confirm Email</label>
-              <input type="email" className="form-control" id="confirmEmail" placeholder="you@example.com" defaultValue="" {...register("confirmEmail", { 
+              <input type="email" className="form-control" data-testid="confirmEmail" id="confirmEmail" placeholder="you@example.com" defaultValue="" {...register("confirmEmail", { 
                 validate: (value) => value === watch('email')
                 })}/>
-              {errors.confirmEmail && <p className="alert alert-danger">Input doesn't match email address</p>}
+              {errors.confirmEmail && <p role="note" className="alert alert-danger">Input doesn't match email address</p>}
             </div>
            
             <div className="col-sm-6">
               <label htmlFor="firstName" className="form-label">First name</label>
-              <input type="text" className="form-control" id="firstName" placeholder="" defaultValue="" {...register("firstName", { 
+              <input type="text" className="form-control" data-testid="firstName" id="firstName" placeholder="" defaultValue="" {...register("firstName", { 
                 required: true, 
                 pattern: /^[A-Z]*$/i,
                 minLength: 2
                 })}/>
-              {errors.firstName && <p className="alert alert-info">Invalid first name</p>}
+              {errors.firstName && <p role="note" className="alert alert-info">Invalid first name</p>}
             </div>
 
             <div className="col-sm-6">
               <label htmlFor="lastName" className="form-label">Last name</label>
-              <input type="text" className="form-control" id="lastName" placeholder="" {...register("lastName", { 
+              <input type="text" className="form-control" data-testid="lastName" id="lastName" placeholder="" {...register("lastName", { 
                 required: true, 
                 pattern: /^[A-Z]*$/i,
                 minLength: 2
                 })}/>
-              {errors.lastName && <p className="alert alert-info">Invalid last name</p>}
+              {errors.lastName && <p role="note" className="alert alert-info">Invalid last name</p>}
             </div>
 
             <div className="col-6">
               <label htmlFor="phone" className="form-label">Phone</label>
-              <input type="text" className="form-control" id="phone" {...register("phone", { 
+              <input type="text" className="form-control" data-testid="phone" id="phone" {...register("phone", { 
                 required: true, 
                 pattern: /^[0-9]*$/i,
                 minLength: 10,
                 maxLength:10
                 })}/>
-              {errors.phone && <p className="alert alert-info">Invalid phone number</p>}
+              {errors.phone && <p role="note" className="alert alert-info">Invalid phone number</p>}
             </div>
 
             <div className="col-12">
               <label htmlFor="address" className="form-label">Address</label>
-              <input type="text" className="form-control" id="address" placeholder="1234 Main St" defaultValue="" {...register("streetAddress", { 
+              <input type="text" className="form-control" data-testid="address" id="address" placeholder="1234 Main St" defaultValue="" {...register("streetAddress", { 
                 required: true, 
                 pattern: /^[A-Za-z0-9'\.\-\s\,]*$/i
                 })}/>
-              {errors.streetAddress && <p className="alert alert-info">Invalid address</p>}
+              {errors.streetAddress && <p role="note" className="alert alert-info">Invalid address</p>}
             </div>
 
             <div className="col-12">
               <label htmlFor="address2" className="form-label">Address 2 <span className="text-muted">(Optional)</span></label>
-              <input type="text" className="form-control" id="address2" placeholder="Apartment or suite" defaultValue="" {...register("apartmentOrSuite", { 
+              <input type="text" className="form-control" data-testid="address2" id="address2" placeholder="Apartment or suite" defaultValue="" {...register("apartmentOrSuite", { 
                 pattern: /^[A-Za-z0-9'\.\-\s\,]*$/i
                 })}/>
-              {errors.apartmentOrSuite && <p className="alert alert-info">Invalid address</p>}
+              {errors.apartmentOrSuite && <p role="note" className="alert alert-info">Invalid address</p>}
             </div>
 
             <div className="col-md-5">
               <label htmlFor="suburb" className="form-label">Suburb</label>
-              <input type="text" className="form-control" id="suburb" defaultValue="" {...register("suburb", { 
+              <input type="text" className="form-control" data-testid="suburb" id="suburb" defaultValue="" {...register("suburb", { 
                 required: true,
                 pattern: /^[A-Za-z'\.\-\s\,]*$/i
                 })}/>
-              {errors.suburb && <p className="alert alert-info">Invalid suburb</p>}
+              {errors.suburb && <p role="note" className="alert alert-info">Invalid suburb</p>}
             </div>
 
             <div className="col-md-4">
               <label htmlFor="state" className="form-label">State</label>
-              <select className="form-select" id="state" {...register("state", { validate: (value) => value.toUpperCase() === value })}>
+              <select className="form-select" data-testid="state" id="state" {...register("state", { validate: (value) => value.toUpperCase() === value })}>
                 <option value="Please select...">Please select...</option>
                 <option value="VIC">VIC</option>
                 <option value="NSW">NSW</option>
@@ -198,18 +198,18 @@ const Checkout = ({ cartId }) => {
                 <option value="TAS">TAS</option>
                 <option value="NT">NT</option>
               </select>
-              {errors.state && <p className="alert alert-info">Please select a state</p>}
+              {errors.state && <p role="note" className="alert alert-info">Please select a state</p>}
             </div>
 
             <div className="col-md-3">
               <label htmlFor="postcode" className="form-label">Postcode</label>
-              <input type="text" className="form-control" id="postcode" placeholder="" {...register("postcode", { 
+              <input type="text" className="form-control" data-testid="postcode" id="postcode" placeholder="" {...register("postcode", { 
                 required: true, 
                 pattern: /^[0-9]*$/i,
                 minLength: 4,
                 maxLength: 4
                 })}/>
-              {errors.postcode && <p className="alert alert-info">Invalid Australian postcode</p>}
+              {errors.postcode && <p role="note" className="alert alert-info">Invalid Australian postcode</p>}
             </div>
           </div>
           <hr className="my-4"/>
@@ -226,7 +226,7 @@ const Checkout = ({ cartId }) => {
           <hr className="my-4"/>
           <h4 className="mb-3">Total Payable: ${finalTotal}</h4>
 
-          <button className="w-100 btn btn-warning btn-lg" type="submit" id="submit">Place Order</button>
+          <button className="w-100 btn btn-warning btn-lg" type="submit" data-testid="submit" id="submit">Place Order</button>
           <button onClick={backToCart} className="w-100 btn mt-3 btn-primary btn-lg">Back to Cart</button>
         </form>
       </div>
