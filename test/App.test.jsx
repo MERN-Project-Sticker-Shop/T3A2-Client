@@ -32,14 +32,14 @@ const fakeProducts = [
     }
 ]
 
-// global.fetch = vi.fn(() => Promise.resolve({
-//     json: () => Promise.resolve(fakeProducts)
-// }))
+global.fetch = vi.fn(() => Promise.resolve({
+    json: () => Promise.resolve(fakeProducts)
+}))
 // global.fetch = vi.fn()
 
-function createFetchResponse (data) {
-    return {json: () => new Promise((resolve) => resolve(data))}
-}
+// function createFetchResponse (data) {
+//     return {json: () => new Promise((resolve) => resolve(data))}
+// }
 
 
 // Integration Test: Users can view a list of product in Home page and view product details in Detail page for each product
@@ -49,20 +49,20 @@ describe('View products', () => {
 
     beforeEach(async function() {
         // fetch.mockResolvedValue(createFetchResponse(fakeProducts))
-        container = document.createElement("div")
-        document.body.appendChild(container)
+        // container = document.createElement("div")
+        // document.body.appendChild(container)
 
-        // await act(async () => {
-        //     render(<BrowserRouter><App /></BrowserRouter>, container)
-        // })
+        await act(async () => {
+            render(<BrowserRouter><App /></BrowserRouter>, container)
+        })
         container = render(<BrowserRouter><App /></BrowserRouter>).container
     })
 
-    afterEach(() => {
-        unmountComponentAtNode(container)
-        container.remove()
-        container = null
-    })
+    // afterEach(() => {
+    //     unmountComponentAtNode(container)
+    //     container.remove()
+    //     container = null
+    // })
 
     // In Home Page:
     it('Shows the Sticker Shop Brand heading', () => {
@@ -84,7 +84,7 @@ describe('View products', () => {
         //         json: () => Promise.resolve(fakeProducts)
         //     }))
 
-        // fetch.mockResolvedValue(createFetchResponse(fakeProducts))
+        // await fetch.mockResolvedValue(createFetchResponse(fakeProducts))
         // await act(async () => {
         //     render()
         // })
