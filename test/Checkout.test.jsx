@@ -21,22 +21,22 @@ const readyCart = [
     }
 ]
 
-// const fakeCart = {
-//     _id: cartId,
-//     items: readyCart,
-//     __v: 0
-// }
+const fakeCart = {
+    _id: cartId,
+    items: readyCart,
+    __v: 0
+}
 
-// global.fetch = vi.fn(() => Promise.resolve({
-//     json: () => Promise.resolve([fakeCart])
-// }))
+global.fetch = vi.fn(() => Promise.resolve({
+    json: () => Promise.resolve(fakeCart)
+}))
 
 // Unit test for the Checkout Component: test that the input validation works
 describe('Checkout Component', () => {
     let container
 
     beforeEach(function() {
-        container = render(<BrowserRouter><Checkout readyCart={readyCart} cartId={cartId}/></BrowserRouter>).container
+        container = render(<BrowserRouter><Checkout cartId={cartId}/></BrowserRouter>).container
     })
     it('Should render all the fields for address', () => {
         expect(container.querySelector('#email')).toBeInTheDocument()
@@ -73,7 +73,7 @@ describe('Checkout Component', () => {
 
         await userEvent.click(container.querySelector('#submit'))
 
-        expect(await container.querySelectorAll('p')).toHaveLength(10)
+        expect(container.querySelectorAll('p')).toHaveLength(10)
     })
     it('should submit correct form data', async () => {
         await userEvent.type(container.querySelector('#email'), "email@gmail.com")
@@ -97,6 +97,6 @@ describe('Checkout Component', () => {
         await userEvent.type(container.querySelector('#postcode'), "3000")
 
         await userEvent.click(container.querySelector('#submit'))
-        expect(await container.querySelectorAll('p')).not.toBeInTheDocument()
+        expect(container.querySelector('p')).not.toBeInTheDocument()
     })
 })

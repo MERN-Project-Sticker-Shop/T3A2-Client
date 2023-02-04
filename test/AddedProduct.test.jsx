@@ -56,9 +56,5 @@ describe('AddedProduct Component', () => {
         expect(container.querySelector('#alert')).toHaveTextContent('Quantity can only be a positive integer')
         expect(setTotal).toHaveBeenCalled()
     })
-    // it('should update cart when the trash icon is clicked', async() => {
-    //     await userEvent.click(container.querySelector('button'))
-    //     expect(setCart).toHaveBeenCalled()
-    // })
 })
 
