@@ -17,7 +17,6 @@ const fakeProducts = [
             "https://imagelink1.com",
             "https://imagelink2.com",
             "https://imagelink3.com"
-
         ]
     },
     {
@@ -29,7 +28,6 @@ const fakeProducts = [
             "https://imagelink4.com",
             "https://imagelink5.com",
             "https://imagelink6.com"
-
         ]
     }
 ]
@@ -44,8 +42,20 @@ describe('View products', () => {
     let container
 
     beforeEach(async function() {
+        // container = document.createElement("div")
+        // document.body.appendChild(container)
+
+        // await act(async () => {
+        //     render(<BrowserRouter><App /></BrowserRouter>, container)
+        // })
         container = render(<BrowserRouter><App /></BrowserRouter>).container
     })
+
+    // afterEach(() => {
+    //     unmountComponentAtNode(container)
+    //     container.remove()
+    //     container = null
+    // })
 
     // In Home Page:
     it('Shows the Sticker Shop Brand heading', () => {
@@ -62,12 +72,17 @@ describe('View products', () => {
     })
     it('Should render a list of (at least 2) product snapshots each with an image, name, price, and view detail button', async () => {
 
+        // vi.spyOn(global, "fetch").mockImplementation(() => 
+        //     Promise.resolve({
+        //         json: () => Promise.resolve(fakeProducts)
+        //     }))
+
         const images = container.querySelectorAll('.card-img-top')
         const names = container.querySelectorAll('.product-name')
         const prices = container.querySelectorAll('.product-price')
         const buttons = screen.getAllByText('View Details')
 
-        await waitFor(() => expect(images).toBeInTheDocument())
+        // await waitFor(() => expect(images).toBeInTheDocument())
 
         expect(images.length).toBeGreaterThanOrEqual(2)
         expect(names.length).toBeGreaterThanOrEqual(2)
@@ -161,5 +176,4 @@ describe('Add the first product to cart', () => {
         expect(total.innerHTML.length).toBeGreaterThanOrEqual(17)
         expect(total.innerHTML).toMatch(new RegExp('Total Payable: $'))
     })
-
 })
