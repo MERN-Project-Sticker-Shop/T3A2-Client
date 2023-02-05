@@ -8,6 +8,7 @@ import { act } from "react-dom/test-utils"
 import { vi } from "vitest"
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
+import { useMediaQuery } from 'react-responsive'
 
 // const fakeProducts = [
 //     {
