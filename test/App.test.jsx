@@ -64,21 +64,37 @@ const productsResponse = rest.get("https://t3a2-server-production.up.railway.app
     return res(ctx.json(originalResponseData))
 })
 
+// const cartid = sessionStorage.getItem('cartId')
+// const name = "R U OK"
+
 const cartResponse1 = rest.post("https://t3a2-server-production.up.railway.app/carts/:cartid/:name", async (req, res, ctx) => {
-    // const { cartId } = sessionStorage.getItem('cartId')
+    const reqBody = await req.json()
     // const { cartid, name } = req.params
-    const cartid = sessionStorage.getItem('cartId')
+    req.params.cartid = sessionStorage.getItem('cartId')
+    req.params.name = reqBody.product
+    // const cartid = sessionStorage.getItem('cartId')
     const originalResponse = await ctx.fetch(req)
     const originalResponseData = await originalResponse.json()
-    if (!cartid) {
+    if (!req.params.cartid) {
         sessionStorage.setItem('cartId', originalResponseData._id)
+        req.params.cartid = originalResponseData._id
     }
-    // const { cartId } = sessionStorage.getItem('cartId')
-    return res(ctx.json(originalResponseData))
+    return res(ctx.json({
+        _id: originalResponseData._id,
+        items: [
+            {
+                product: reqBody.product,
+                price: reqBody.price,
+                quantity: reqBody.quantity,
+                imageLink: reqBody.imageLink
+            }
+        ]
+    }))
 })
 
 const cartResponse2 = rest.get("https://t3a2-server-production.up.railway.app/carts/:cartid", async (req, res, ctx) => {
-    const cartid = sessionStorage.getItem('cartId')
+    req.params.cartid = sessionStorage.getItem('cartId')
+    // const cartid = sessionStorage.getItem('cartId')
     const originalResponse = await ctx.fetch(req)
     const originalResponseData = await originalResponse.json()
     return res(ctx.json(originalResponseData))
@@ -196,7 +212,7 @@ describe('Add the first product to cart', () => {
         await userEvent.click(button)
 
         await waitFor(() => {
-            expect(screen.getByTestId('cart-notification')).toBeInTheDocument()
+            expect(screen.getByTestId('cart-notification')).toBeVisble()
         })
 
         expect(screen.getByTestId('cart-notification')).toHaveValue('1')
