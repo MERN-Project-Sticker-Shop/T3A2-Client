@@ -9,30 +9,30 @@ import { vi } from "vitest"
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-const fakeProducts = [
-    {
-        _id: "asdfawertq345adasd",
-        name: "product1",
-        price: 4,
-        description: "This is the description for product 1",
-        imageLinks: [
-            "https://imagelink1.com",
-            "https://imagelink2.com",
-            "https://imagelink3.com"
-        ]
-    },
-    {
-        _id: "asdfawertqasdf5adasd",
-        name: "product2",
-        price: 5,
-        description: "This is the description for product 2",
-        imageLinks: [
-            "https://imagelink4.com",
-            "https://imagelink5.com",
-            "https://imagelink6.com"
-        ]
-    }
-]
+// const fakeProducts = [
+//     {
+//         _id: "asdfawertq345adasd",
+//         name: "product1",
+//         price: 4,
+//         description: "This is the description for product 1",
+//         imageLinks: [
+//             "https://imagelink1.com",
+//             "https://imagelink2.com",
+//             "https://imagelink3.com"
+//         ]
+//     },
+//     {
+//         _id: "asdfawertqasdf5adasd",
+//         name: "product2",
+//         price: 5,
+//         description: "This is the description for product 2",
+//         imageLinks: [
+//             "https://imagelink4.com",
+//             "https://imagelink5.com",
+//             "https://imagelink6.com"
+//         ]
+//     }
+// ]
 
 // const fakeCart1 = {
 //     _id: "asdf1234qwerzxcv",
@@ -46,52 +46,42 @@ const fakeProducts = [
 //     ]
 // }
 
-const fakeCart2 = {
-    _id: "asdf1234qwerzxcv",
-    items: [
-        {
-            product: "product1",
-            price: 4,
-            quantity: 13,
-            imageLink: "https://imagelink1.com"
-        }
-    ]
-}
+// const fakeCart2 = {
+//     _id: "asdf1234qwerzxcv",
+//     items: [
+//         {
+//             product: "product1",
+//             price: 4,
+//             quantity: 13,
+//             imageLink: "https://imagelink1.com"
+//         }
+//     ]
+// }
 
-const productsResponse = rest.get("https://t3a2-server-production.up.railway.app/products", (req, res, ctx) => {
-    return res(ctx.json(fakeProducts))
+const productsResponse = rest.get("https://t3a2-server-production.up.railway.app/products", async (req, res, ctx) => {
+    const originalResponse = await ctx.fetch(req)
+    const originalResponseData = await originalResponse.json()
+    return res(ctx.json(originalResponseData))
 })
 
-const cartResponse1 = rest.post("https://t3a2-server-production.up.railway.app/carts/null/:name", (req, res, ctx) => {
+const cartResponse1 = rest.post("https://t3a2-server-production.up.railway.app/carts/:cartid/:name", async (req, res, ctx) => {
     // const { cartId } = sessionStorage.getItem('cartId')
-    const { name } = req.params
+    // const { cartid, name } = req.params
+    const cartid = sessionStorage.getItem('cartId')
+    const originalResponse = await ctx.fetch(req)
+    const originalResponseData = await originalResponse.json()
+    if (!cartid) {
+        sessionStorage.setItem('cartId', originalResponseData._id)
+    }
     // const { cartId } = sessionStorage.getItem('cartId')
-    return res(ctx.status(201), ctx.json(
-        {
-            _id: "asdfasdfawe533423",
-            items: [{
-                product: name,
-                price: 4,
-                quantity: 1,
-                imageLink: "https://imagelink1.com"
-                }]
-        }
-    ))
+    return res(ctx.json(originalResponseData))
 })
 
-const cartResponse2 = rest.get("https://t3a2-server-production.up.railway.app/carts/:cartId/:name", (req, res, ctx) => {
-    const { cartId } = sessionStorage.getItem('cartId')
-    const { name } = req.params
-    return res(ctx.json(
-        {
-        _id: cartId,
-        items: [{
-            product: name,
-            price: 4,
-            quantity: 1,
-            imageLink: "https://imagelink1.com"
-        }]
-    }))
+const cartResponse2 = rest.get("https://t3a2-server-production.up.railway.app/carts/:cartid", async (req, res, ctx) => {
+    const cartid = sessionStorage.getItem('cartId')
+    const originalResponse = await ctx.fetch(req)
+    const originalResponseData = await originalResponse.json()
+    return res(ctx.json(originalResponseData))
 })
 
 const handlers = [productsResponse, cartResponse1, cartResponse2]
