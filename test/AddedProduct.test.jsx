@@ -8,13 +8,14 @@ const item = {product: "product", quantity: "1", imageLink: "fake_link"}
 const cart = [{product: "product1"}, {product: "product2"}, {product: "product3"}, item]
 
 const setCart = vi.fn()
+const setTotal = vi.fn()
 
 // Unit test for AddedProduct Component: testing the validation of user input of the product quantity
 describe('AddedProduct Component', () => {
     let container
 
     beforeEach(function() {
-        container = render(<AddedProduct item={item} setCart={setCart} cart={cart}/>).container
+        container = render(<AddedProduct item={item} setCart={setCart} setTotal={setTotal} cartId={cartId}/>).container
     })
     it('render all elements as required', () => {
         const productName = container.querySelector('#product-name-in-cart')
@@ -35,17 +36,19 @@ describe('AddedProduct Component', () => {
     it('should update quantity when user enter correct input', async () => {
         await userEvent.type(container.querySelector('input'), '4')
         expect(container.querySelector('input')).toHaveValue('14')
+        expect(setTotal).toHaveBeenCalled()
     })
     it('should update quantity when user double click input area and enter correct input', async () => {
         await userEvent.dblClick(container.querySelector('input'))
         await userEvent.type(container.querySelector('input'), '4', {skipClick: true})
         expect(container.querySelector('input')).toHaveValue('4')
+        expect(setTotal).toHaveBeenCalled()
     })
     it('should render error message when input is invalid', async() => {
         await userEvent.type(container.querySelector('input'), 'r')
-        expect(container.querySelector('input')).toHaveValue('--')
+        expect(container.querySelector('input')).toHaveValue(' ')
         expect(container.querySelector('#alert')).toBeInTheDocument()
         expect(container.querySelector('#alert')).toHaveTextContent('Quantity can only be a positive integer')
+        expect(setTotal).toHaveBeenCalled()
     })
 })
-
