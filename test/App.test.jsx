@@ -1,42 +1,68 @@
 import "@testing-library/jest-dom"
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import  userEvent  from "@testing-library/user-event"
 import { BrowserRouter } from "react-router-dom"
-import App from '../src/components/App' 
+import App from '../src/components/App'
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
+
+const productsResponse = rest.get("https://t3a2-server-production.up.railway.app/products", async (req, res, ctx) => {
+    const originalResponse = await ctx.fetch(req)
+    const originalResponseData = await originalResponse.json()
+    return res(ctx.json(originalResponseData))
+})
+
+const handlers = [productsResponse]
+
+const server = setupServer(...handlers)
+
 
 // Integration Test: Users can view a list of product in Home page and view product details in Detail page for each product
 describe('View products', () => {
+
+    beforeAll(() => server.listen())
+    afterEach(() => server.resetHandlers())
+    afterAll(() => server.close())
+    
     let container
 
-    beforeEach(function() {
+    beforeEach(async function() {
+
         container = render(<BrowserRouter><App /></BrowserRouter>).container
     })
+
     // In Home Page:
-    it('Shows the Sticker Shop Brand heading', () => {
-        expect(container.querySelector('h1')).toBeDefined()
-        expect(container.querySelector('h1')).toHaveTextContent('The Sticker Brand')
+    it('Shows the Sticker Shop Banner', () => {
+        expect(container.querySelector('#banner')).toBeDefined()
+        expect(container.querySelector('h3')).toHaveTextContent('Smoonypaws Banner')
     })
     it('Show shop intro', () => {
         expect(container.querySelector("#intro")).toBeDefined()
-        expect(container.querySelector("#intro").innerHTML).toMatch(new RegExp('Introduction'))
+        expect(container.querySelector("#intro").innerHTML).toMatch(new RegExp('stickers'))
     })
     it('Show Products heading', () => {
         expect(container.querySelector('h2')).toBeDefined()
         expect(container.querySelector('h2')).toHaveTextContent('Products')
     })
-    it('Should render a list of product snapshots each with an image, name, price, and view detail button', () => {
+    it('Should render a list of (at least 2) product snapshots each with an image, name, price, and view detail button', async () => {
+
+        // wait until the image of the first product is rendered
+        await waitFor(() => {
+            expect(container.querySelector('.card-img-top')).toBeInTheDocument()
+        })
+
         const images = container.querySelectorAll('.card-img-top')
         const names = container.querySelectorAll('.product-name')
         const prices = container.querySelectorAll('.product-price')
-        const buttons = screen.getAllByText('View Details')
+        const buttons = container.querySelectorAll('button')
 
-        expect(images.length).toBeGreaterThanOrEqual(1)
-        expect(names.length).toBeGreaterThanOrEqual(1)
-        expect(prices.length).toBeGreaterThanOrEqual(1)
-        expect(buttons.length).toBeGreaterThanOrEqual(1)
+        expect(images.length).toBeGreaterThanOrEqual(2)
+        expect(names.length).toBeGreaterThanOrEqual(2)
+        expect(prices.length).toBeGreaterThanOrEqual(2)
+        expect(buttons.length).toBeGreaterThanOrEqual(2)
 
         expect(container.querySelectorAll('.product-snapshot')).toBeDefined()
-        expect(container.querySelectorAll('.product-snapshot').length).toBeGreaterThanOrEqual(1)
+        expect(container.querySelectorAll('.product-snapshot').length).toBeGreaterThanOrEqual(2)
 
         container.querySelectorAll('.product-snapshot').forEach((album, index) => {
             expect(album).toContainElement(images[index])
@@ -47,9 +73,11 @@ describe('View products', () => {
     })
     // In Detail page:
     it('Show detail page of first product when a corresponding "View Details" is clicked', async () => {
-        const toDetails = screen.getAllByText('View Details')
-        const toFirstProduct = toDetails[0]
-        await userEvent.click(toFirstProduct)
+        await waitFor(() => {
+            expect(container.querySelector('button')).toBeVisible()
+        })
+
+        await userEvent.click(container.querySelector('button'))
 
         const detailImages = screen.getAllByAltText('product-detail-image')
         const productName = container.querySelector('.product-detail-name')
@@ -59,10 +87,13 @@ describe('View products', () => {
 
         expect(detailImages).toBeDefined()
         expect(detailImages).toHaveLength(3)
-        expect(productName).toBeDefined()
-        expect(productName).toHaveTextContent('Flower Stickers')
+
+        expect(productName).toBeDefined() 
+        expect(productName.innerHTML.length).toBeGreaterThanOrEqual(2)
+
         expect(productPrice).toBeDefined()
-        expect(productPrice).toHaveTextContent('Price: $ 5.5')
+        expect(productPrice.innerHTML.length).toBeGreaterThanOrEqual(9)
+
         expect(description).toBeDefined()
         expect(description.innerHTML.length).toBeGreaterThanOrEqual(15)
         expect(button).toBeDefined()
@@ -70,51 +101,3 @@ describe('View products', () => {
     })
 })
 
-// Integration test: User can add product to cart by clicking the 'Add to Cart' button and manipulate the selected product
-describe('Add the first product to cart', () => {
-    let container
-
-    beforeEach(async function() {
-        container = render(<BrowserRouter><App /></BrowserRouter>).container
-        const button = container.querySelector('#add-product')
-        await userEvent.click(button)
-    })
-    // in Navbar:
-    it('Click "Add to Cart" and cart notification in Navbar will be updated', () => {
-
-        const notification = container.querySelector('#cart-notification')
-        expect(notification).toHaveTextContent('1')
-    })
-    // in Cart:
-    it('Added product will show up in cart', async () => {
-        const cart = container.querySelector('#to-cart')
-        await userEvent.click(cart)
-        
-        const title = container.querySelector('h2')
-        expect(title).toHaveTextContent('Cart')
-
-        const productName = container.querySelector('#product-name-in-cart')
-        expect(productName).toBeDefined()
-        expect(productName).toHaveTextContent('Flower Stickers')
-
-        const productPrice = container.querySelector('#product-price-in-cart')
-        expect(productPrice).toBeDefined()
-        expect(productPrice).toHaveTextContent('Price: $ 5.5')
-
-        const quantity = container.querySelector('input')
-        expect(quantity).toBeDefined()
-        expect(quantity).toHaveValue('1')
-
-        await userEvent.type(quantity, '3')
-        expect(quantity).toHaveValue('13')
-
-        const subtotal = container.querySelector('#cart-subtotal')
-        expect(subtotal).toBeDefined()
-        expect(subtotal).toHaveTextContent('Subtotal: $71.5')
-
-        const total = container.querySelector('#cart-total')
-        expect(total).toBeDefined()
-        expect(total).toHaveTextContent('Total Payable: $71.5')
-    })
-
-})

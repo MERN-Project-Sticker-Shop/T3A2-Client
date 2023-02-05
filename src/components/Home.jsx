@@ -56,7 +56,7 @@ const Home = ({products}) => {
   return (
     <>
         <div>
-            <div style={{backgroundImage: "url(https://i.postimg.cc/ryNFfW8Q/Banner-1.jpg)", height:"20vw", backgroundSize:"100vw"}}>
+            <div id="banner" style={{backgroundImage: "url(https://i.postimg.cc/ryNFfW8Q/Banner-1.jpg)", height:"20vw", backgroundSize:"100vw"}}>
                 <h3 style={{position:"relative", zIndex: "-1"}}>Smoonypaws Banner</h3>
             </div>
             <h5 style={viewWidth().textStyle}>Shop Info</h5>
